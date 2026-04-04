@@ -2,9 +2,9 @@ import { useNavigate } from 'react-router-dom';
 import { useMemo } from 'react';
 import { useUser } from '../context/UserContext';
 import { computeNatalChart } from '../engine/natal';
-import { formatDegree } from '../engine/zodiac';
 import NatalChart from '../components/hero/NatalChart';
 import GlassCard from '../components/common/GlassCard';
+import PlanetRow from '../components/common/PlanetRow';
 import styles from './NatalChartPage.module.css';
 
 export default function NatalChartPage() {
@@ -42,31 +42,12 @@ export default function NatalChartPage() {
         </p>
       )}
 
-      <div className={styles.planets}>
+      <GlassCard className={styles.planetsCard}>
+        <p className={styles.planetsHint}>Tap a planet to read more.</p>
         {chart.planets.map((p) => (
-          <GlassCard key={p.id} className={styles.planetCard}>
-            <div className={styles.planetRow}>
-              <span
-                className={styles.planetGlyph}
-                style={{ color: `var(--chakra-${p.chakra})` }}
-              >
-                {p.glyph}
-              </span>
-              <div className={styles.planetText}>
-                <div className={styles.planetHeader}>
-                  <span className={styles.planetName}>{p.name}</span>
-                  <span className={styles.planetChakra}>·  {p.chakra}</span>
-                </div>
-                <div className={styles.planetSign}>
-                  <span style={{ color: `var(--chakra-${p.chakra})` }}>{p.sign.glyph}</span>{' '}
-                  {p.sign.name} {formatDegree(p.degreeInSign)}
-                </div>
-                <p className={styles.planetDomain}>{p.domain}</p>
-              </div>
-            </div>
-          </GlassCard>
+          <PlanetRow key={p.id} planet={p} />
         ))}
-      </div>
+      </GlassCard>
     </div>
   );
 }

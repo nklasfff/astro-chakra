@@ -1,0 +1,24 @@
+.wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: var(--space-md) 0;
+}
+
+.svg {
+  width: var(--size, 260px);
+  height: var(--size, 260px);
+  max-width: 100%;
+  display: block;
+}
+
+@keyframes ripple {
+  0% { r: 10; opacity: 0.8; }
+  100% { r: 115; opacity: 0; }
+}
+
+.ripple {
+  animation: ripple 6s ease-out infinite both;
+  transform-origin: center;
+}

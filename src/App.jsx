@@ -9,6 +9,9 @@ import ChakraDeepPage from './pages/ChakraDeepPage';
 import ExplorePage from './pages/ExplorePage';
 import NatalChartPage from './pages/NatalChartPage';
 import TimePage from './pages/TimePage';
+import ProfilePage from './pages/ProfilePage';
+import JournalPage from './pages/JournalPage';
+import RelationsPage from './pages/RelationsPage';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -30,25 +33,10 @@ function AppRoutes() {
         <Route path="/explore" element={<ExplorePage />} />
         <Route path="/explore/chakras/:chakraId" element={<ChakraDeepPage />} />
         <Route path="/explore/natal" element={<NatalChartPage />} />
-        <Route
-          path="/relations"
-          element={
-            <PlaceholderPage
-              title="Relations"
-              body="Synastry and chakra resonance between charts."
-            />
-          }
-        />
+        <Route path="/explore/journal" element={<JournalPage />} />
+        <Route path="/relations" element={<RelationsPage />} />
         <Route path="/time" element={<TimePage />} />
-        <Route
-          path="/profile"
-          element={
-            <PlaceholderPage
-              title="Profile"
-              body="Your natal summary and settings live here."
-            />
-          }
-        />
+        <Route path="/profile" element={<ProfilePage />} />
       </Route>
       <Route path="*" element={<Navigate to="/home" replace />} />
     </Routes>

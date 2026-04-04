@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 import { computeCurrentSky, getMoonPhase } from '../engine/transits';
 import { formatDegree } from '../engine/zodiac';
 import GlassCard from '../components/common/GlassCard';
+import PlanetRow from '../components/common/PlanetRow';
 import MoonPhase from '../components/hero/MoonPhase';
 import NatalChart from '../components/hero/NatalChart';
 import styles from './TimePage.module.css';
@@ -83,16 +84,9 @@ export default function TimePage() {
 
       <div className={styles.planets}>
         <h3 className={styles.sectionTitle}>Planets</h3>
+        <p className={styles.sectionHint}>Tap a planet to read more.</p>
         {sky.planets.map((p) => (
-          <div key={p.id} className={styles.planetRow}>
-            <span className={styles.planetGlyph} style={{ color: `var(--chakra-${p.chakra})` }}>
-              {p.glyph}
-            </span>
-            <span className={styles.planetName}>{p.name}</span>
-            <span className={styles.planetSign}>
-              {p.sign.glyph} {p.sign.name} {formatDegree(p.degreeInSign)}
-            </span>
-          </div>
+          <PlanetRow key={p.id} planet={p} />
         ))}
       </div>
     </div>

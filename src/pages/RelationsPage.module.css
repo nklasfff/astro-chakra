@@ -1,0 +1,324 @@
+.page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: var(--space-xl) var(--space-lg) var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.header {
+  text-align: center;
+  padding-top: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--text-bright);
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.98rem;
+  color: var(--text-secondary);
+  max-width: 460px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.empty {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md) 0;
+}
+
+.emptyText {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.02rem;
+  color: var(--text-secondary);
+  max-width: 380px;
+  line-height: 1.6;
+}
+
+.primaryBtn {
+  background: transparent;
+  border: 1px solid var(--border-light);
+  color: var(--text-bright);
+  padding: 12px 32px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-display);
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  transition: all var(--transition);
+  cursor: pointer;
+}
+
+.primaryBtn:hover:not(:disabled) {
+  border-color: var(--text-secondary);
+  background: var(--glass-strong);
+}
+
+.primaryBtn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.ghostBtn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  padding: var(--space-sm) var(--space-md);
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  transition: color var(--transition);
+  cursor: pointer;
+}
+
+.ghostBtn:hover {
+  color: var(--text-secondary);
+}
+
+.friendTabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.tab {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 8px 18px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  transition: all var(--transition);
+  cursor: pointer;
+}
+
+.tab:hover {
+  color: var(--text-secondary);
+  border-color: var(--border-light);
+}
+
+.tabActive {
+  color: var(--text-bright);
+  border-color: var(--text-secondary);
+  background: var(--glass-strong);
+}
+
+.addTab {
+  background: transparent;
+  border: 1px dashed var(--border-light);
+  color: var(--text-muted);
+  padding: 8px 18px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-style: italic;
+  transition: all var(--transition);
+  cursor: pointer;
+}
+
+.addTab:hover {
+  color: var(--text-secondary);
+  border-color: var(--text-secondary);
+}
+
+.friendCard {
+  padding: var(--space-md) var(--space-lg);
+}
+
+.friendHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-md);
+}
+
+.friendLabel {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.friendSuns {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  color: var(--text-primary);
+}
+
+.removeBtn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  padding: 4px 8px;
+  opacity: 0.5;
+  transition: all var(--transition);
+}
+
+.removeBtn:hover {
+  opacity: 1;
+  color: var(--chakra-root);
+}
+
+.aspectsCard {
+  padding: var(--space-lg);
+}
+
+.aspectsLabel {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: var(--space-md);
+}
+
+.aspects {
+  display: flex;
+  flex-direction: column;
+}
+
+.aspect {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 10px 0;
+  border-bottom: 1px solid var(--glass-border);
+  font-size: 0.84rem;
+}
+
+.aspect:last-child {
+  border-bottom: none;
+}
+
+.aspectSide {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+}
+
+.aspectGlyph {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  line-height: 1;
+  filter: drop-shadow(0 0 3px currentColor);
+  flex-shrink: 0;
+}
+
+.aspectName {
+  font-family: var(--font-display);
+  font-size: 0.86rem;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.aspectCore {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  min-width: 58px;
+}
+
+.aspectSymbol {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1;
+}
+
+.aspectMood {
+  font-size: 0.58rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.aspectOrb {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  min-width: 36px;
+  text-align: right;
+}
+
+.addCard {
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.addTitle {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 300;
+  color: var(--text-bright);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fieldLabel {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.input {
+  font-family: var(--font-body);
+}
+
+.dateRow {
+  display: flex;
+  gap: var(--space-md);
+}
+
+.dateRow .field {
+  flex: 1;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-md);
+  align-items: center;
+  margin-top: var(--space-sm);
+}

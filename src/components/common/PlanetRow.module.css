@@ -1,0 +1,91 @@
+.row {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--glass-border);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.row:hover {
+  background: var(--glass-strong);
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+}
+
+.glyph {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  line-height: 1;
+  min-width: 24px;
+  text-align: center;
+  filter: drop-shadow(0 0 3px currentColor);
+  flex-shrink: 0;
+}
+
+.name {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  color: var(--text-bright);
+  min-width: 80px;
+}
+
+.sign {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  flex: 1;
+}
+
+.chevron {
+  font-size: 1rem;
+  color: var(--text-muted);
+  opacity: 0.5;
+  transition: opacity var(--transition);
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+
+.rowOpen .chevron {
+  opacity: 0.9;
+}
+
+.body {
+  padding-top: var(--space-sm);
+  padding-left: calc(24px + var(--space-sm));
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  animation: fadeDown 0.3s var(--ease-out) both;
+}
+
+.domain {
+  font-size: 0.86rem;
+  color: var(--text-primary);
+  line-height: 1.65;
+}
+
+.mode {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.86rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+.stacked .head {
+  flex-wrap: wrap;
+}
+
+.stacked .sign {
+  flex: 0 0 100%;
+  padding-left: calc(24px + var(--space-sm));
+}

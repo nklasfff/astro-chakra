@@ -1,0 +1,166 @@
+.page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: var(--space-xl) var(--space-lg) var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.header {
+  text-align: center;
+  padding-top: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  font-weight: 300;
+  color: var(--text-bright);
+  line-height: 1.1;
+}
+
+.poeticLine {
+  text-align: center;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  max-width: 440px;
+  margin: calc(-1 * var(--space-md)) auto 0;
+  line-height: 1.6;
+}
+
+.card {
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cardLabel {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+}
+
+.cardTitle {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 300;
+  line-height: 1.2;
+}
+
+.cardBody {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  line-height: 1.7;
+}
+
+.cardMeta {
+  font-size: 0.8rem;
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+.birthDate {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: var(--text-bright);
+  line-height: 1.3;
+}
+
+.birthDetail {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.chartLink {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.linkCard {
+  padding: var(--space-lg);
+  transition: transform var(--transition);
+}
+
+.linkCard:hover {
+  transform: translateY(-1px);
+}
+
+.linkTitle {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 300;
+  color: var(--text-bright);
+  margin-top: 4px;
+  line-height: 1.3;
+}
+
+.settingRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.settingRow:last-of-type {
+  border-bottom: none;
+}
+
+.settingLabel {
+  font-size: 0.92rem;
+  color: var(--text-primary);
+}
+
+.settingBtn {
+  background: transparent;
+  border: 1px solid var(--border-light);
+  color: var(--text-secondary);
+  padding: 6px 18px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  letter-spacing: 0.04em;
+  transition: all var(--transition);
+  cursor: pointer;
+}
+
+.settingBtn:hover {
+  border-color: var(--text-secondary);
+  color: var(--text-bright);
+}
+
+.settingBtnDanger {
+  border-color: var(--chakra-root);
+  color: var(--chakra-root);
+}
+
+.settingBtnDanger:hover {
+  background: rgba(194, 104, 72, 0.08);
+  color: var(--chakra-root);
+}
+
+.settingHint {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-style: italic;
+  line-height: 1.6;
+  margin-top: var(--space-sm);
+}

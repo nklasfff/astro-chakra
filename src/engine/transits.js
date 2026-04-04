@@ -89,6 +89,39 @@ export function computeTransits(currentSky, natalChart) {
 }
 
 /**
+ * Compute aspects WITHIN a single chart (natal or transit).
+ * Each unique planet pair is checked once.
+ */
+export function computeNatalAspects(chart) {
+  if (!chart) return [];
+  const { planets } = chart;
+  const results = [];
+  for (let i = 0; i < planets.length; i++) {
+    for (let j = i + 1; j < planets.length; j++) {
+      const a = planets[i];
+      const b = planets[j];
+      const dist = angularDistance(a.longitude, b.longitude);
+      for (const aspect of ASPECTS) {
+        const diff = Math.abs(dist - aspect.angle);
+        if (diff <= aspect.orb) {
+          results.push({
+            aspect,
+            a,
+            b,
+            orb: diff,
+            exact: diff < 1,
+          });
+        }
+      }
+    }
+  }
+  results.sort((a, b) => a.orb - b.orb);
+  return results;
+}
+
+export { ASPECTS };
+
+/**
  * Moon phase for a given Julian day.
  * Returns { phase (0-1), name, illumination (0-1) }.
  * Phase: 0 = new moon, 0.25 = first quarter, 0.5 = full, 0.75 = last quarter.

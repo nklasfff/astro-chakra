@@ -1,0 +1,36 @@
+.wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: var(--space-md) 0;
+}
+
+.svg {
+  width: var(--size, 260px);
+  height: var(--size, 260px);
+  max-width: 100%;
+  display: block;
+}
+
+@keyframes skyBreath {
+  0%, 100% { opacity: 0.85; }
+  50% { opacity: 1; }
+}
+
+@keyframes vesicaBreath {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 0.85; }
+}
+
+.skyA {
+  animation: skyBreath 6s var(--ease) infinite;
+}
+
+.skyB {
+  animation: skyBreath 7s var(--ease) 2s infinite;
+}
+
+.vesica {
+  animation: vesicaBreath 9s var(--ease) infinite;
+}

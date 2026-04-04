@@ -1,0 +1,40 @@
+.wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: var(--space-md) 0;
+}
+
+.svg {
+  width: var(--size, 260px);
+  height: var(--size, 260px);
+  max-width: 100%;
+  display: block;
+}
+
+@keyframes signatureBreath {
+  0%, 100% { opacity: 0.75; }
+  50% { opacity: 1; }
+}
+
+@keyframes triangleBreath {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.85; }
+}
+
+.bloomSun {
+  animation: signatureBreath 6s var(--ease) infinite;
+}
+
+.bloomMoon {
+  animation: signatureBreath 7s var(--ease) 1.5s infinite;
+}
+
+.bloomChakra {
+  animation: signatureBreath 8s var(--ease) 3s infinite;
+}
+
+.triangle {
+  animation: triangleBreath 10s var(--ease) infinite;
+}

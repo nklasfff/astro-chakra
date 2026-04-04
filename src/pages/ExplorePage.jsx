@@ -81,7 +81,15 @@ export default function ExplorePage() {
         <GlassCard className={styles.natalCard}>
           <span className={styles.natalLabel}>Astrology</span>
           <h2 className={styles.natalTitle}>Your natal chart</h2>
-          <p className={styles.natalSub}>The sky you were born under — planets, signs, houses.</p>
+          <p className={styles.natalSub}>The sky you were born under — planets, signs, aspects.</p>
+        </GlassCard>
+      </Link>
+
+      <Link to="/explore/journal" className={styles.natalLink}>
+        <GlassCard className={styles.natalCard}>
+          <span className={styles.natalLabel}>Practice</span>
+          <h2 className={styles.natalTitle}>Reflecting pool</h2>
+          <p className={styles.natalSub}>A daily chakra-aware prompt. Write a sentence, watch the ripple.</p>
         </GlassCard>
       </Link>
     </div>

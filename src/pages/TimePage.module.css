@@ -137,7 +137,14 @@
   font-size: 1.1rem;
   font-weight: 300;
   color: var(--text-bright);
-  margin-bottom: var(--space-xs);
+  margin-bottom: 4px;
+}
+
+.sectionHint {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-bottom: var(--space-sm);
 }
 
 .planetRow {

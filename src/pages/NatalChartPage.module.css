@@ -70,10 +70,16 @@
   padding: var(--space-xl) 0;
 }
 
-.planets {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-sm);
+.planetsCard {
+  padding: var(--space-lg);
+}
+
+.planetsHint {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  font-style: italic;
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid var(--glass-border);
 }
 
 .planetCard {
