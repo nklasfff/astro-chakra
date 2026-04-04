@@ -1,0 +1,4 @@
+.moon {
+  display: block;
+  filter: drop-shadow(0 0 8px rgba(221, 124, 92, 0.15));
+}

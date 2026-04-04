@@ -8,6 +8,7 @@ import ChakraLotus from '../components/hero/ChakraLotus';
 import ChakraThread from '../components/hero/ChakraThread';
 import PlanetaryOrbit from '../components/hero/PlanetaryOrbit';
 import SpiralIllustration from '../components/hero/SpiralIllustration';
+import TodaysSky from '../components/hero/TodaysSky';
 import styles from './HomePage.module.css';
 
 export default function HomePage() {
@@ -85,6 +86,8 @@ export default function HomePage() {
           <div />
         )}
       </div>
+
+      <TodaysSky />
 
       <Link to="/explore/natal" className={styles.orbitLink}>
         <PlanetaryOrbit size={280} />

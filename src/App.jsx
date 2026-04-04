@@ -8,6 +8,7 @@ import PlaceholderPage from './pages/PlaceholderPage';
 import ChakraDeepPage from './pages/ChakraDeepPage';
 import ExplorePage from './pages/ExplorePage';
 import NatalChartPage from './pages/NatalChartPage';
+import TimePage from './pages/TimePage';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -38,15 +39,7 @@ function AppRoutes() {
             />
           }
         />
-        <Route
-          path="/time"
-          element={
-            <PlaceholderPage
-              title="Time"
-              body="Today's transits, moon phase, and time-travel to any date."
-            />
-          }
-        />
+        <Route path="/time" element={<TimePage />} />
         <Route
           path="/profile"
           element={
