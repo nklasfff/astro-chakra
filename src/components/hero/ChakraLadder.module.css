@@ -15,11 +15,21 @@
 
 @keyframes bloomBreath {
   0%, 100% { opacity: 0.9; transform: scale(1); transform-origin: center; }
-  50% { opacity: 1; transform: scale(1.04); }
+  50% { opacity: 1; transform: scale(1.06); }
+}
+
+@keyframes subtlePulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.85; }
 }
 
 .activeGroup {
   animation: bloomBreath 5s var(--ease) infinite;
   transform-box: fill-box;
   transform-origin: center;
+}
+
+.svg circle[opacity="0.25"],
+.svg circle[opacity="0.2"] {
+  animation: subtlePulse 9s var(--ease) infinite;
 }

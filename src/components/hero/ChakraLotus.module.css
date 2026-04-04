@@ -1,0 +1,32 @@
+.wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: var(--space-md) 0;
+}
+
+.svg {
+  width: var(--size, 260px);
+  height: var(--size, 260px);
+  max-width: 100%;
+  display: block;
+}
+
+@keyframes petalBreathe {
+  0%, 100% { opacity: 0.72; }
+  50% { opacity: 1; }
+}
+
+@keyframes lotusBreathe {
+  0%, 100% { opacity: 0.88; }
+  50% { opacity: 1; }
+}
+
+.petal {
+  animation: petalBreathe 7s var(--ease) infinite;
+}
+
+.petalActive {
+  animation: lotusBreathe 5s var(--ease) infinite;
+}

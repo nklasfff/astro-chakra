@@ -10,11 +10,19 @@
   padding-bottom: calc(var(--bottom-nav-height) + var(--safe-bottom) + var(--space-md));
 }
 
+@media (min-width: 768px) {
+  .main {
+    max-width: var(--frame-width);
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
 .themeBtn {
   position: fixed;
   top: calc(var(--safe-top, 0px) + 14px);
   right: 16px;
-  z-index: 100;
+  z-index: 200;
   background: none;
   border: none;
   padding: 6px;
@@ -23,6 +31,12 @@
   opacity: 0.6;
   transition: opacity var(--transition), color var(--transition);
   -webkit-tap-highlight-color: transparent;
+}
+
+@media (min-width: 768px) {
+  .themeBtn {
+    right: calc(50% - var(--frame-width) / 2 + 16px);
+  }
 }
 
 .themeBtn:hover {

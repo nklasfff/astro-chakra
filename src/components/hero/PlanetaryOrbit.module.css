@@ -1,0 +1,27 @@
+.wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: var(--space-md) 0;
+}
+
+.svg {
+  width: var(--size, 260px);
+  height: var(--size, 260px);
+  max-width: 100%;
+  display: block;
+}
+
+@keyframes orbitRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.orbit {
+  animation-name: orbitRotate;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  transform-origin: 150px 150px;
+  transform-box: fill-box;
+}

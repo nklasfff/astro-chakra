@@ -15,6 +15,14 @@
   z-index: 100;
 }
 
+@media (min-width: 768px) {
+  .nav {
+    max-width: var(--frame-width);
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
 .tab {
   display: flex;
   flex-direction: column;

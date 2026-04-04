@@ -1,9 +1,9 @@
 :root {
-  /* ── Backgrounds (light watercolor paper) ── */
-  --bg: #faf6ee;
-  --bg-elevated: #f5efe2;
-  --surface: #fefbf3;
-  --surface-hover: #faf4e6;
+  /* ── Backgrounds (off-white watercolor paper) ── */
+  --bg: #fdfbf6;
+  --bg-elevated: #f9f5ec;
+  --surface: #fffdf8;
+  --surface-hover: #fcf9f1;
 
   /* ── Text (espresso on paper) ── */
   --text-bright: #2a2118;
@@ -15,6 +15,10 @@
   /* ── Borders ── */
   --border: rgba(74, 58, 42, 0.1);
   --border-light: rgba(74, 58, 42, 0.18);
+  --frame-border: rgba(74, 58, 42, 0.18);
+
+  /* ── Layout constraint (desktop frame) ── */
+  --frame-width: 720px;
 
   /* ── Chakra Accents (watercolor — vibrant, from the reference image) ── */
   --chakra-root: #c26848;         /* Muladhara — warm terracotta */
@@ -26,10 +30,10 @@
   --chakra-crown: #9f7bc0;        /* Sahasrara — soft violet */
 
   /* ── Paper / Wash (replaces glass) ── */
-  --glass: rgba(255, 252, 244, 0.72);
-  --glass-border: rgba(74, 58, 42, 0.08);
-  --glass-hover: rgba(255, 253, 248, 0.92);
-  --glass-strong: rgba(74, 58, 42, 0.05);
+  --glass: rgba(255, 254, 249, 0.78);
+  --glass-border: rgba(74, 58, 42, 0.07);
+  --glass-hover: rgba(255, 255, 252, 0.94);
+  --glass-strong: rgba(74, 58, 42, 0.04);
 
   /* ── Glow (soft watercolor blooms) ── */
   --glow-warm: rgba(221, 124, 92, 0.18);
@@ -39,7 +43,7 @@
   --glow-violet: rgba(159, 123, 192, 0.15);
 
   /* ── Nav ── */
-  --nav-bg: rgba(250, 246, 238, 0.94);
+  --nav-bg: rgba(253, 251, 246, 0.95);
 
   /* ── Illustrations ── */
   --line-faint: rgba(74, 58, 42, 0.07);
@@ -57,13 +61,13 @@
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 
   /* ── Spacing ── */
-  --space-xs: 6px;
-  --space-sm: 12px;
-  --space-md: 20px;
-  --space-lg: 32px;
-  --space-xl: 48px;
-  --space-2xl: 72px;
-  --space-3xl: 100px;
+  --space-xs: 8px;
+  --space-sm: 14px;
+  --space-md: 24px;
+  --space-lg: 40px;
+  --space-xl: 60px;
+  --space-2xl: 88px;
+  --space-3xl: 120px;
 
   /* ── Radius ── */
   --radius-sm: 10px;
@@ -86,43 +90,48 @@
   --safe-bottom: env(safe-area-inset-bottom, 0px);
 }
 
-/* Dark mode — dusk/twilight variant of the watercolor palette */
+/* Dark mode — aged manuscript seen by candlelight.
+   Warm sepia-bronze depth instead of black. Same chakra colors,
+   same spaciousness, just a different light source. */
 [data-theme="dark"] {
-  --bg: #1f1a14;
-  --bg-elevated: #2a2218;
-  --surface: #332a1e;
-  --surface-hover: #3d3224;
+  --bg: #2a2216;
+  --bg-elevated: #332a1c;
+  --surface: #3d3322;
+  --surface-hover: #473c28;
 
-  --text-bright: #f5ecd8;
-  --text-primary: #ddccae;
-  --text-secondary: #b39a75;
-  --text-muted: #8a7558;
-  --text-dim: #6e5b40;
+  --text-bright: #faf0da;
+  --text-primary: #e8d5b0;
+  --text-secondary: #c2a67f;
+  --text-muted: #948067;
+  --text-dim: #6d5d47;
 
-  --border: rgba(221, 204, 174, 0.12);
-  --border-light: rgba(221, 204, 174, 0.2);
+  --border: rgba(250, 240, 218, 0.12);
+  --border-light: rgba(250, 240, 218, 0.2);
+  --frame-border: rgba(250, 240, 218, 0.16);
 
-  --glass: rgba(51, 42, 30, 0.6);
-  --glass-border: rgba(221, 204, 174, 0.08);
-  --glass-hover: rgba(61, 50, 36, 0.72);
-  --glass-strong: rgba(221, 204, 174, 0.08);
+  --glass: rgba(61, 51, 34, 0.68);
+  --glass-border: rgba(250, 240, 218, 0.09);
+  --glass-hover: rgba(71, 60, 40, 0.82);
+  --glass-strong: rgba(250, 240, 218, 0.06);
 
-  --glow-warm: rgba(212, 122, 80, 0.18);
-  --glow-sage: rgba(122, 158, 109, 0.14);
-  --glow-blue: rgba(107, 146, 181, 0.14);
+  --glow-warm: rgba(221, 124, 92, 0.28);
+  --glow-sage: rgba(126, 161, 88, 0.22);
+  --glow-blue: rgba(98, 141, 178, 0.22);
+  --glow-gold: rgba(213, 167, 67, 0.24);
+  --glow-violet: rgba(159, 123, 192, 0.22);
 
-  --nav-bg: rgba(31, 26, 20, 0.92);
+  --nav-bg: rgba(42, 34, 22, 0.94);
 
-  --line-faint: rgba(221, 204, 174, 0.06);
-  --line-subtle: rgba(221, 204, 174, 0.12);
-  --line-medium: rgba(221, 204, 174, 0.2);
-  --line-strong: rgba(221, 204, 174, 0.35);
-  --text-illustration-dim: rgba(221, 204, 174, 0.22);
-  --text-illustration: rgba(221, 204, 174, 0.42);
-  --text-illustration-bright: rgba(221, 204, 174, 0.65);
-  --dot-illustration: rgba(221, 204, 174, 0.22);
-  --clock-border: rgba(31, 26, 20, 0.92);
+  --line-faint: rgba(250, 240, 218, 0.07);
+  --line-subtle: rgba(250, 240, 218, 0.13);
+  --line-medium: rgba(250, 240, 218, 0.22);
+  --line-strong: rgba(250, 240, 218, 0.36);
+  --text-illustration-dim: rgba(250, 240, 218, 0.22);
+  --text-illustration: rgba(250, 240, 218, 0.42);
+  --text-illustration-bright: rgba(250, 240, 218, 0.66);
+  --dot-illustration: rgba(250, 240, 218, 0.24);
+  --clock-border: rgba(42, 34, 22, 0.94);
 
-  --shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-  --shadow-up: 0 -2px 20px rgba(0, 0, 0, 0.2);
+  --shadow: 0 4px 28px rgba(0, 0, 0, 0.32);
+  --shadow-up: 0 -2px 18px rgba(0, 0, 0, 0.22);
 }
