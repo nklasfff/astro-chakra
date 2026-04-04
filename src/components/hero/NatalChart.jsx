@@ -4,33 +4,25 @@ import styles from './NatalChart.module.css';
 /**
  * Circular natal chart SVG — the zodiac wheel with planets placed at their
  * ecliptic longitudes. Watercolor aesthetic: soft washes for each sign's
- * element, planet glyphs glowing in their chakra-linked colors.
- *
- * Layout:
- *   outer ring  : 12 signs (30° each) with glyphs
- *   middle ring : degree marks
- *   inner disc  : planet positions
- *
- * The chart is drawn with 0° Aries at 9 o'clock (left), angles increasing
- * counter-clockwise — the traditional astrological orientation.
+ * element, planet glyphs standing in their chakra-linked colors.
  */
-export default function NatalChart({ chart, size = 340 }) {
+export default function NatalChart({ chart, size = 360 }) {
   if (!chart) return null;
 
   const cx = 200;
   const cy = 200;
-  const outerR = 180;
-  const signR = 165;
-  const middleR = 138;
-  const planetR = 100;
-  const centerR = 40;
+  const outerR = 184;       // outer circle
+  const signOuterR = 180;   // sign glyphs outer band
+  const signInnerR = 142;   // inner edge of sign band
+  const planetBaseR = 108;  // planets base ring
+  const centerR = 28;
 
-  // Ecliptic angle → SVG angle. In a traditional chart, 0° Aries is on the
-  // left (9 o'clock), increasing counter-clockwise. SVG angles go clockwise
-  // from 3 o'clock, so we map: svgAngle = 180 - eclipticLongitude.
-  const eclipticToRadians = (lon) => ((180 - lon) * Math.PI) / 180;
+  // In a traditional chart, 0° Aries is at 9 o'clock (left), angles increasing
+  // counter-clockwise. SVG angles go clockwise from 3 o'clock, so:
+  //   svgAngle = 180° - eclipticLongitude
+  const toRad = (lon) => ((180 - lon) * Math.PI) / 180;
   const polar = (lon, r) => {
-    const a = eclipticToRadians(lon);
+    const a = toRad(lon);
     return { x: cx + r * Math.cos(a), y: cy - r * Math.sin(a) };
   };
 
@@ -41,29 +33,44 @@ export default function NatalChart({ chart, size = 340 }) {
     water: 'var(--chakra-thirdeye)',
   };
 
+  // Build the sector path for a sign wash
+  const sectorPath = (startLon, endLon, innerR, outerR_) => {
+    const p1 = polar(startLon, innerR);
+    const p2 = polar(startLon, outerR_);
+    const p3 = polar(endLon, outerR_);
+    const p4 = polar(endLon, innerR);
+    return `M ${p1.x} ${p1.y} L ${p2.x} ${p2.y} A ${outerR_} ${outerR_} 0 0 0 ${p3.x} ${p3.y} L ${p4.x} ${p4.y} A ${innerR} ${innerR} 0 0 1 ${p1.x} ${p1.y} Z`;
+  };
+
   return (
     <div className={styles.wrap} style={{ '--size': `${size}px` }}>
       <svg viewBox="0 0 400 400" className={styles.svg} aria-hidden="true">
         <defs>
-          <radialGradient id="chart-center" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="var(--bg)" stopOpacity="1" />
-            <stop offset="100%" stopColor="var(--bg)" stopOpacity="0" />
-          </radialGradient>
           <filter id="planet-glow">
-            <feGaussianBlur stdDeviation="1" />
+            <feGaussianBlur stdDeviation="2" />
           </filter>
         </defs>
 
-        {/* Outer boundary */}
-        <circle cx={cx} cy={cy} r={outerR} fill="none" stroke="var(--line-subtle)" strokeWidth="0.8" />
-        <circle cx={cx} cy={cy} r={middleR} fill="none" stroke="var(--line-faint)" strokeWidth="0.5" />
-        <circle cx={cx} cy={cy} r={centerR} fill="none" stroke="var(--line-subtle)" strokeWidth="0.5" />
+        {/* Element washes — colored sectors per sign */}
+        {SIGNS.map((sign, i) => (
+          <path
+            key={`wash-${sign.id}`}
+            d={sectorPath(i * 30, (i + 1) * 30, signInnerR, signOuterR)}
+            fill={elementColor[sign.element]}
+            opacity="0.13"
+          />
+        ))}
 
-        {/* Sign divisions (every 30°) */}
+        {/* Ring boundaries */}
+        <circle cx={cx} cy={cy} r={outerR} fill="none" stroke="var(--line-medium)" strokeWidth="1.2" />
+        <circle cx={cx} cy={cy} r={signInnerR} fill="none" stroke="var(--line-subtle)" strokeWidth="0.8" />
+        <circle cx={cx} cy={cy} r={planetBaseR} fill="none" stroke="var(--line-faint)" strokeWidth="0.5" strokeDasharray="1 4" />
+        <circle cx={cx} cy={cy} r={centerR} fill="none" stroke="var(--line-subtle)" strokeWidth="0.6" />
+
+        {/* Sign division lines */}
         {SIGNS.map((sign, i) => {
-          const startLon = i * 30;
-          const p1 = polar(startLon, middleR);
-          const p2 = polar(startLon, outerR);
+          const p1 = polar(i * 30, signInnerR);
+          const p2 = polar(i * 30, signOuterR);
           return (
             <line
               key={`div-${sign.id}`}
@@ -72,24 +79,7 @@ export default function NatalChart({ chart, size = 340 }) {
               x2={p2.x}
               y2={p2.y}
               stroke="var(--line-subtle)"
-              strokeWidth="0.6"
-            />
-          );
-        })}
-
-        {/* Element wash behind each sign */}
-        {SIGNS.map((sign, i) => {
-          const midLon = i * 30 + 15;
-          const p = polar(midLon, (middleR + outerR) / 2);
-          return (
-            <circle
-              key={`wash-${sign.id}`}
-              cx={p.x}
-              cy={p.y}
-              r="18"
-              fill={elementColor[sign.element]}
-              opacity="0.08"
-              filter="url(#planet-glow)"
+              strokeWidth="0.8"
             />
           );
         })}
@@ -97,31 +87,31 @@ export default function NatalChart({ chart, size = 340 }) {
         {/* Sign glyphs + names */}
         {SIGNS.map((sign, i) => {
           const midLon = i * 30 + 15;
-          const p = polar(midLon, signR);
+          const p = polar(midLon, (signInnerR + signOuterR) / 2);
           return (
             <g key={`sign-${sign.id}`}>
               <text
                 x={p.x}
-                y={p.y - 4}
+                y={p.y - 6}
                 textAnchor="middle"
                 dominantBaseline="middle"
-                fontSize="13"
+                fontSize="20"
                 fontFamily="var(--font-display)"
                 fill={elementColor[sign.element]}
-                opacity="0.85"
+                style={{ filter: 'drop-shadow(0 0 4px currentColor)' }}
               >
                 {sign.glyph}
               </text>
               <text
                 x={p.x}
-                y={p.y + 10}
+                y={p.y + 11}
                 textAnchor="middle"
                 dominantBaseline="middle"
                 fontSize="6.5"
                 fontFamily="var(--font-body)"
-                fill="var(--text-muted)"
-                opacity="0.6"
-                letterSpacing="0.5"
+                fontWeight="500"
+                fill="var(--text-secondary)"
+                letterSpacing="0.6"
               >
                 {sign.name.toUpperCase()}
               </text>
@@ -129,13 +119,13 @@ export default function NatalChart({ chart, size = 340 }) {
           );
         })}
 
-        {/* Degree tick marks every 5° */}
+        {/* Degree tick marks every 5°, stronger every 10° */}
         {Array.from({ length: 72 }, (_, i) => {
           const lon = i * 5;
-          const isMajor = i % 6 === 0; // every 30°
-          const inner = isMajor ? middleR - 6 : middleR - 3;
+          const isMajor = i % 2 === 0;
+          const inner = isMajor ? signInnerR - 7 : signInnerR - 4;
           const p1 = polar(lon, inner);
-          const p2 = polar(lon, middleR);
+          const p2 = polar(lon, signInnerR);
           return (
             <line
               key={`tick-${i}`}
@@ -143,60 +133,82 @@ export default function NatalChart({ chart, size = 340 }) {
               y1={p1.y}
               x2={p2.x}
               y2={p2.y}
-              stroke="var(--line-faint)"
+              stroke="var(--line-subtle)"
               strokeWidth="0.5"
             />
           );
         })}
 
-        {/* Planet positions — with spreading to prevent overlap */}
+        {/* Planet positions */}
         {layoutPlanets(chart.planets).map((p) => (
-          <Planet key={p.id} cx={cx} cy={cy} radius={planetR} polar={polar} planet={p} />
+          <Planet key={p.id} planetBaseR={planetBaseR} signInnerR={signInnerR} polar={polar} planet={p} />
         ))}
 
         {/* Center dot */}
-        <circle cx={cx} cy={cy} r="3" fill="var(--text-illustration-bright)" opacity="0.7" />
+        <circle cx={cx} cy={cy} r="4" fill="var(--text-illustration-bright)" opacity="0.9" />
       </svg>
     </div>
   );
 }
 
 /**
- * Spread planets that are within 5° of each other onto slightly different radii
+ * Spread planets that are within ~8° of each other onto different radii
  * to prevent glyph overlap.
  */
 function layoutPlanets(planets) {
   const sorted = [...planets].sort((a, b) => a.longitude - b.longitude);
-  const spread = new Map();
-  const threshold = 7;
-  for (let i = 0; i < sorted.length; i++) {
+  const placed = [];
+  const threshold = 8;
+
+  for (const planet of sorted) {
     let offset = 0;
-    for (let j = 0; j < i; j++) {
-      const diff = Math.abs(sorted[i].longitude - sorted[j].longitude);
+    for (const p of placed) {
+      const diff = Math.abs(planet.longitude - p.longitude);
       const wrapDiff = Math.min(diff, 360 - diff);
-      if (wrapDiff < threshold) {
-        offset = (spread.get(sorted[j].id) || 0) + 1;
+      if (wrapDiff < threshold && p.radiusOffset === offset) {
+        offset += 1;
       }
     }
-    spread.set(sorted[i].id, offset);
+    placed.push({ ...planet, radiusOffset: offset });
   }
-  return sorted.map((p) => ({ ...p, radiusOffset: spread.get(p.id) || 0 }));
+  return placed;
 }
 
-function Planet({ cx, cy, radius, polar, planet }) {
-  const r = radius - planet.radiusOffset * 18;
+function Planet({ planetBaseR, signInnerR, polar, planet }) {
+  const r = planetBaseR - planet.radiusOffset * 26;
   const pos = polar(planet.longitude, r);
   const chakraColor = `var(--chakra-${planet.chakra})`;
+  const tickInner = polar(planet.longitude, signInnerR - 2);
+  const tickOuter = polar(planet.longitude, signInnerR + 8);
 
   return (
     <g>
-      {/* Planet glow */}
+      {/* Sharp tick on zodiac ring showing exact position */}
+      <line
+        x1={tickInner.x}
+        y1={tickInner.y}
+        x2={tickOuter.x}
+        y2={tickOuter.y}
+        stroke={chakraColor}
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      {/* Filled background disc behind glyph for contrast */}
       <circle
         cx={pos.x}
         cy={pos.y}
-        r="11"
+        r="15"
         fill={chakraColor}
-        opacity="0.18"
+        opacity="0.22"
+      />
+      <circle
+        cx={pos.x}
+        cy={pos.y}
+        r="15"
+        fill="none"
+        stroke={chakraColor}
+        strokeWidth="1.2"
+        opacity="0.75"
       />
       {/* Planet glyph */}
       <text
@@ -204,23 +216,14 @@ function Planet({ cx, cy, radius, polar, planet }) {
         y={pos.y}
         textAnchor="middle"
         dominantBaseline="central"
-        fontSize="14"
+        fontSize="17"
         fontFamily="var(--font-display)"
+        fontWeight="400"
         fill={chakraColor}
-        style={{ filter: 'drop-shadow(0 0 6px currentColor)' }}
+        style={{ filter: 'drop-shadow(0 0 3px currentColor)' }}
       >
         {planet.glyph}
       </text>
-      {/* Thin radial line to the zodiac wheel */}
-      <line
-        x1={pos.x}
-        y1={pos.y}
-        x2={polar(planet.longitude, radius + 38).x}
-        y2={polar(planet.longitude, radius + 38).y}
-        stroke={chakraColor}
-        strokeWidth="0.4"
-        opacity="0.3"
-      />
     </g>
   );
 }
