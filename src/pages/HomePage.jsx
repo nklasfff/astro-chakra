@@ -9,6 +9,7 @@ import ChakraThread from '../components/hero/ChakraThread';
 import PlanetaryOrbit from '../components/hero/PlanetaryOrbit';
 import SpiralIllustration from '../components/hero/SpiralIllustration';
 import TodaysSky from '../components/hero/TodaysSky';
+import TransitAspects from '../components/hero/TransitAspects';
 import styles from './HomePage.module.css';
 
 export default function HomePage() {
@@ -88,6 +89,8 @@ export default function HomePage() {
       </div>
 
       <TodaysSky />
+
+      <TransitAspects limit={5} />
 
       <Link to="/explore/natal" className={styles.orbitLink}>
         <PlanetaryOrbit size={280} />
