@@ -1,0 +1,135 @@
+.page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: var(--space-xl) var(--space-lg) var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.header {
+  text-align: center;
+  padding: var(--space-md) 0 var(--space-sm);
+}
+
+.greeting {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+  margin-bottom: var(--space-sm);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  font-weight: 300;
+  color: var(--text-bright);
+  line-height: 1.1;
+}
+
+.subtitle {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin-top: var(--space-xs);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  margin-top: var(--space-md);
+}
+
+.link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.card {
+  transition: transform var(--transition), background var(--transition);
+  cursor: pointer;
+  padding: var(--space-lg) var(--space-lg);
+}
+
+.card:hover {
+  transform: translateY(-1px);
+}
+
+.cardDimmed {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.cardDimmed:hover {
+  transform: none;
+}
+
+.cardRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.devanagari {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: 2rem;
+  line-height: 1;
+  flex-shrink: 0;
+  min-width: 64px;
+  text-align: center;
+  text-shadow: 0 0 20px currentColor;
+}
+
+.cardText {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cardTop {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cardLabel {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.currentDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  box-shadow: 0 0 8px currentColor;
+}
+
+.cardName {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 300;
+  line-height: 1.2;
+}
+
+.cardSub {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+}
+
+.hint {
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-style: italic;
+  padding-top: var(--space-lg);
+}

@@ -1,0 +1,253 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xl) var(--space-lg);
+  overflow-y: auto;
+}
+
+.progress {
+  position: fixed;
+  top: var(--space-lg);
+  display: flex;
+  gap: 8px;
+  z-index: 201;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: background var(--transition), transform var(--transition);
+}
+
+.dotActive {
+  transform: scale(1.3);
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  font-weight: 300;
+  color: var(--text-bright);
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  font-style: italic;
+  max-width: 360px;
+}
+
+.body {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  line-height: 1.8;
+  max-width: 400px;
+}
+
+.helperText {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-style: italic;
+  max-width: 360px;
+  line-height: 1.7;
+}
+
+.revealSymbol {
+  font-size: 4rem;
+  font-weight: 300;
+  animation: fadeUp 0.8s var(--ease-out) both;
+  margin-bottom: var(--space-sm);
+  text-shadow: 0 0 40px currentColor;
+  font-family: var(--font-display);
+}
+
+/* Date / time inputs */
+.dateInputs {
+  display: flex;
+  gap: var(--space-md);
+  margin: var(--space-md) 0 var(--space-sm);
+  transition: opacity var(--transition);
+}
+
+.textInputs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin: var(--space-md) 0;
+  width: 100%;
+  max-width: 340px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.field select,
+.field input {
+  min-width: 90px;
+}
+
+.checkboxRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  margin: var(--space-xs) 0;
+}
+
+.checkboxRow input[type="checkbox"] {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--border-light);
+  border-radius: 3px;
+  background: var(--surface);
+  cursor: pointer;
+  position: relative;
+  transition: all var(--transition-fast);
+}
+
+.checkboxRow input[type="checkbox"]:checked {
+  background: var(--text-secondary);
+  border-color: var(--text-secondary);
+}
+
+.checkboxRow input[type="checkbox"]:checked::after {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 0px;
+  width: 5px;
+  height: 9px;
+  border: solid var(--bg);
+  border-width: 0 1.5px 1.5px 0;
+  transform: rotate(45deg);
+}
+
+/* Summary */
+.summary {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  padding: var(--space-lg);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin: var(--space-md) 0;
+  box-shadow: var(--shadow);
+}
+
+.summaryItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-xs) 0;
+  border-bottom: 1px solid var(--glass-border);
+  font-size: 0.95rem;
+}
+
+.summaryItem:last-child {
+  border-bottom: none;
+}
+
+.summaryLabel {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Actions */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  margin-top: var(--space-xl);
+}
+
+.btn {
+  background: transparent;
+  border: 1px solid var(--border-light);
+  color: var(--text-bright);
+  padding: 14px 40px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  transition: all var(--transition);
+  cursor: pointer;
+}
+
+.btn:hover {
+  border-color: var(--text-secondary);
+  background: var(--glass-strong);
+  transform: translateY(-1px);
+}
+
+.btn:disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btnGhost {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  padding: var(--space-sm) var(--space-md);
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  transition: color var(--transition);
+  cursor: pointer;
+}
+
+.btnGhost:hover {
+  color: var(--text-secondary);
+}
+
+/* Welcome illustration */
+@keyframes welcomeAppear {
+  from { opacity: 0; transform: scale(0.85); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.welcomeIllustration {
+  width: 220px;
+  height: auto;
+  margin-bottom: var(--space-md);
+  animation: welcomeAppear 2s var(--ease-out) both;
+}

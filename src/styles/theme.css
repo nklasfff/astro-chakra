@@ -1,0 +1,128 @@
+:root {
+  /* ── Backgrounds (light watercolor paper) ── */
+  --bg: #faf6ee;
+  --bg-elevated: #f5efe2;
+  --surface: #fefbf3;
+  --surface-hover: #faf4e6;
+
+  /* ── Text (espresso on paper) ── */
+  --text-bright: #2a2118;
+  --text-primary: #453629;
+  --text-secondary: #7a5a3e;
+  --text-muted: #a58c68;
+  --text-dim: #bfa888;
+
+  /* ── Borders ── */
+  --border: rgba(74, 58, 42, 0.1);
+  --border-light: rgba(74, 58, 42, 0.18);
+
+  /* ── Chakra Accents (watercolor — vibrant, from the reference image) ── */
+  --chakra-root: #c26848;         /* Muladhara — warm terracotta */
+  --chakra-sacral: #dd7c5c;       /* Svadhisthana — warm coral */
+  --chakra-solar: #d5a743;        /* Manipura — golden honey */
+  --chakra-heart: #7ea158;        /* Anahata — watercolor sage */
+  --chakra-throat: #628db2;       /* Vishuddha — denim blue */
+  --chakra-thirdeye: #6e6aa8;     /* Ajna — lavender indigo */
+  --chakra-crown: #9f7bc0;        /* Sahasrara — soft violet */
+
+  /* ── Paper / Wash (replaces glass) ── */
+  --glass: rgba(255, 252, 244, 0.72);
+  --glass-border: rgba(74, 58, 42, 0.08);
+  --glass-hover: rgba(255, 253, 248, 0.92);
+  --glass-strong: rgba(74, 58, 42, 0.05);
+
+  /* ── Glow (soft watercolor blooms) ── */
+  --glow-warm: rgba(221, 124, 92, 0.18);
+  --glow-sage: rgba(126, 161, 88, 0.16);
+  --glow-blue: rgba(98, 141, 178, 0.15);
+  --glow-gold: rgba(213, 167, 67, 0.15);
+  --glow-violet: rgba(159, 123, 192, 0.15);
+
+  /* ── Nav ── */
+  --nav-bg: rgba(250, 246, 238, 0.94);
+
+  /* ── Illustrations ── */
+  --line-faint: rgba(74, 58, 42, 0.07);
+  --line-subtle: rgba(74, 58, 42, 0.14);
+  --line-medium: rgba(74, 58, 42, 0.22);
+  --line-strong: rgba(74, 58, 42, 0.38);
+  --text-illustration-dim: rgba(74, 58, 42, 0.22);
+  --text-illustration: rgba(74, 58, 42, 0.42);
+  --text-illustration-bright: rgba(74, 58, 42, 0.65);
+  --dot-illustration: rgba(74, 58, 42, 0.22);
+  --clock-border: rgba(242, 232, 214, 0.92);
+
+  /* ── Typography ── */
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* ── Spacing ── */
+  --space-xs: 6px;
+  --space-sm: 12px;
+  --space-md: 20px;
+  --space-lg: 32px;
+  --space-xl: 48px;
+  --space-2xl: 72px;
+  --space-3xl: 100px;
+
+  /* ── Radius ── */
+  --radius-sm: 10px;
+  --radius: 16px;
+  --radius-lg: 24px;
+  --radius-full: 100px;
+
+  /* ── Shadows (soft watercolor halos) ── */
+  --shadow: 0 4px 24px rgba(74, 58, 42, 0.08);
+  --shadow-up: 0 -2px 16px rgba(74, 58, 42, 0.06);
+
+  /* ── Motion ── */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --transition: 0.4s var(--ease);
+  --transition-fast: 0.2s var(--ease);
+
+  /* ── Layout ── */
+  --bottom-nav-height: 72px;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Dark mode — dusk/twilight variant of the watercolor palette */
+[data-theme="dark"] {
+  --bg: #1f1a14;
+  --bg-elevated: #2a2218;
+  --surface: #332a1e;
+  --surface-hover: #3d3224;
+
+  --text-bright: #f5ecd8;
+  --text-primary: #ddccae;
+  --text-secondary: #b39a75;
+  --text-muted: #8a7558;
+  --text-dim: #6e5b40;
+
+  --border: rgba(221, 204, 174, 0.12);
+  --border-light: rgba(221, 204, 174, 0.2);
+
+  --glass: rgba(51, 42, 30, 0.6);
+  --glass-border: rgba(221, 204, 174, 0.08);
+  --glass-hover: rgba(61, 50, 36, 0.72);
+  --glass-strong: rgba(221, 204, 174, 0.08);
+
+  --glow-warm: rgba(212, 122, 80, 0.18);
+  --glow-sage: rgba(122, 158, 109, 0.14);
+  --glow-blue: rgba(107, 146, 181, 0.14);
+
+  --nav-bg: rgba(31, 26, 20, 0.92);
+
+  --line-faint: rgba(221, 204, 174, 0.06);
+  --line-subtle: rgba(221, 204, 174, 0.12);
+  --line-medium: rgba(221, 204, 174, 0.2);
+  --line-strong: rgba(221, 204, 174, 0.35);
+  --text-illustration-dim: rgba(221, 204, 174, 0.22);
+  --text-illustration: rgba(221, 204, 174, 0.42);
+  --text-illustration-bright: rgba(221, 204, 174, 0.65);
+  --dot-illustration: rgba(221, 204, 174, 0.22);
+  --clock-border: rgba(31, 26, 20, 0.92);
+
+  --shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+  --shadow-up: 0 -2px 20px rgba(0, 0, 0, 0.2);
+}

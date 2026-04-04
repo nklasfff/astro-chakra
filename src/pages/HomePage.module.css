@@ -1,0 +1,195 @@
+.page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: var(--space-xl) var(--space-lg) var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.header {
+  text-align: center;
+  padding: var(--space-sm) 0 0;
+}
+
+.greeting {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+}
+
+.caption {
+  text-align: center;
+  margin-top: calc(-1 * var(--space-md));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.devanagari {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: 2.4rem;
+  line-height: 1;
+  text-shadow: 0 0 30px currentColor;
+}
+
+.chakraName {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 300;
+  line-height: 1.1;
+  margin-top: 2px;
+}
+
+.sanskrit {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--text-secondary);
+  max-width: 380px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.label {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+}
+
+.cardTitle {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 300;
+  color: var(--text-bright);
+}
+
+.cardBody {
+  font-size: 0.92rem;
+  color: var(--text-primary);
+  line-height: 1.75;
+}
+
+.leadBody {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--text-primary);
+  line-height: 1.65;
+}
+
+.cardMeta {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-top: var(--space-xs);
+}
+
+/* Neighbors */
+.neighbors {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+
+.neighborLink {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.neighborCard {
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: transform var(--transition);
+}
+
+.neighborCard:hover {
+  transform: translateY(-1px);
+}
+
+.neighborLabel {
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+}
+
+.neighborRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.neighborDevanagari {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: 1.4rem;
+  line-height: 1;
+  text-shadow: 0 0 15px currentColor;
+  flex-shrink: 0;
+}
+
+.neighborName {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 300;
+  line-height: 1.1;
+}
+
+.neighborCaption {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* Reflection */
+.reflectionCard {
+  padding: var(--space-lg);
+}
+
+.quote {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  padding-left: var(--space-md);
+  border-left: 2px solid;
+  margin-top: var(--space-sm);
+}
+
+/* Deep link */
+.deepLink {
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: var(--space-md);
+  letter-spacing: 0.02em;
+  transition: color var(--transition);
+}
+
+.deepLink:hover {
+  color: var(--text-bright);
+}
+
+.hint {
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-style: italic;
+  padding-top: var(--space-md);
+}

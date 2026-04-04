@@ -1,0 +1,33 @@
+.card {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  padding: var(--space-lg);
+  transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+  position: relative;
+  box-shadow: var(--shadow);
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: var(--radius);
+  background: radial-gradient(
+    ellipse at 50% 0%,
+    var(--card-glow) 0%,
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity var(--transition);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.card:hover {
+  background: var(--glass-hover);
+}
+
+.card:hover::before {
+  opacity: 1;
+}

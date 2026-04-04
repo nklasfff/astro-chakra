@@ -1,0 +1,25 @@
+.wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: var(--space-md) 0;
+}
+
+.svg {
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  display: block;
+}
+
+@keyframes bloomBreath {
+  0%, 100% { opacity: 0.9; transform: scale(1); transform-origin: center; }
+  50% { opacity: 1; transform: scale(1.04); }
+}
+
+.activeGroup {
+  animation: bloomBreath 5s var(--ease) infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
