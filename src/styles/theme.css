@@ -90,48 +90,48 @@
   --safe-bottom: env(safe-area-inset-bottom, 0px);
 }
 
-/* Dark mode — aged manuscript seen by candlelight.
-   Warm sepia-bronze depth instead of black. Same chakra colors,
-   same spaciousness, just a different light source. */
+/* Dark mode — deep black with the faintest warm undertone.
+   Clean, exclusive, high contrast. Chakra colors glow as pigment
+   on ink. The warmth lives in the text and the watercolor, not the ground. */
 [data-theme="dark"] {
-  --bg: #2a2216;
-  --bg-elevated: #332a1c;
-  --surface: #3d3322;
-  --surface-hover: #473c28;
+  --bg: #0b0a09;
+  --bg-elevated: #13110f;
+  --surface: #1a1815;
+  --surface-hover: #22201c;
 
-  --text-bright: #faf0da;
-  --text-primary: #e8d5b0;
-  --text-secondary: #c2a67f;
-  --text-muted: #948067;
-  --text-dim: #6d5d47;
+  --text-bright: #f5ecdc;
+  --text-primary: #dccdb2;
+  --text-secondary: #a8957a;
+  --text-muted: #76675a;
+  --text-dim: #534838;
 
-  --border: rgba(250, 240, 218, 0.12);
-  --border-light: rgba(250, 240, 218, 0.2);
-  --frame-border: rgba(250, 240, 218, 0.16);
+  --border: rgba(245, 236, 220, 0.1);
+  --border-light: rgba(245, 236, 220, 0.18);
+  --frame-border: rgba(245, 236, 220, 0.14);
 
-  --glass: rgba(61, 51, 34, 0.68);
-  --glass-border: rgba(250, 240, 218, 0.09);
-  --glass-hover: rgba(71, 60, 40, 0.82);
-  --glass-strong: rgba(250, 240, 218, 0.06);
+  --glass: rgba(26, 24, 21, 0.74);
+  --glass-border: rgba(245, 236, 220, 0.08);
+  --glass-hover: rgba(34, 32, 28, 0.88);
+  --glass-strong: rgba(245, 236, 220, 0.06);
 
-  --glow-warm: rgba(221, 124, 92, 0.28);
-  --glow-sage: rgba(126, 161, 88, 0.22);
-  --glow-blue: rgba(98, 141, 178, 0.22);
-  --glow-gold: rgba(213, 167, 67, 0.24);
-  --glow-violet: rgba(159, 123, 192, 0.22);
+  --glow-warm: rgba(221, 124, 92, 0.32);
+  --glow-sage: rgba(126, 161, 88, 0.26);
+  --glow-blue: rgba(98, 141, 178, 0.26);
+  --glow-gold: rgba(213, 167, 67, 0.28);
+  --glow-violet: rgba(159, 123, 192, 0.26);
 
-  --nav-bg: rgba(42, 34, 22, 0.94);
+  --nav-bg: rgba(11, 10, 9, 0.95);
 
-  --line-faint: rgba(250, 240, 218, 0.07);
-  --line-subtle: rgba(250, 240, 218, 0.13);
-  --line-medium: rgba(250, 240, 218, 0.22);
-  --line-strong: rgba(250, 240, 218, 0.36);
-  --text-illustration-dim: rgba(250, 240, 218, 0.22);
-  --text-illustration: rgba(250, 240, 218, 0.42);
-  --text-illustration-bright: rgba(250, 240, 218, 0.66);
-  --dot-illustration: rgba(250, 240, 218, 0.24);
-  --clock-border: rgba(42, 34, 22, 0.94);
+  --line-faint: rgba(245, 236, 220, 0.06);
+  --line-subtle: rgba(245, 236, 220, 0.12);
+  --line-medium: rgba(245, 236, 220, 0.22);
+  --line-strong: rgba(245, 236, 220, 0.38);
+  --text-illustration-dim: rgba(245, 236, 220, 0.22);
+  --text-illustration: rgba(245, 236, 220, 0.44);
+  --text-illustration-bright: rgba(245, 236, 220, 0.7);
+  --dot-illustration: rgba(245, 236, 220, 0.26);
+  --clock-border: rgba(11, 10, 9, 0.95);
 
-  --shadow: 0 4px 28px rgba(0, 0, 0, 0.32);
-  --shadow-up: 0 -2px 18px rgba(0, 0, 0, 0.22);
+  --shadow: 0 4px 32px rgba(0, 0, 0, 0.48);
+  --shadow-up: 0 -2px 20px rgba(0, 0, 0, 0.35);
 }

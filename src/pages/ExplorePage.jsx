@@ -3,6 +3,7 @@ import { useUser } from '../context/UserContext';
 import { CHAKRAS } from '../engine/chakras';
 import { hasChakraDeep, getChakraDeep } from '../engine/chakraDeep';
 import GlassCard from '../components/common/GlassCard';
+import ChakraColumn from '../components/hero/ChakraColumn';
 import styles from './ExplorePage.module.css';
 
 export default function ExplorePage() {
@@ -22,6 +23,12 @@ export default function ExplorePage() {
           A vertical column of centres, from ground to sky.
         </p>
       </header>
+
+      <ChakraColumn width={200} height={440} />
+
+      <p className={styles.columnCaption}>
+        The sushumna — the channel energy travels as it climbs and descends.
+      </p>
 
       <div className={styles.list}>
         {ordered.map((chakra) => {

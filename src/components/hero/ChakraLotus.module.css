@@ -7,26 +7,37 @@
 }
 
 .svg {
-  width: var(--size, 260px);
-  height: var(--size, 260px);
+  width: var(--size, 280px);
+  height: var(--size, 280px);
   max-width: 100%;
   display: block;
 }
 
+/* Petals animate opacity only — scale would conflict with SMIL rotation.
+   The visible motion comes from SMIL rotation of the parent group. */
 @keyframes petalBreathe {
-  0%, 100% { opacity: 0.72; }
+  0%, 100% { opacity: 0.7; }
   50% { opacity: 1; }
 }
 
-@keyframes lotusBreathe {
-  0%, 100% { opacity: 0.88; }
+@keyframes petalBreatheActive {
+  0%, 100% { opacity: 0.85; }
   50% { opacity: 1; }
+}
+
+@keyframes centerPulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.85; }
 }
 
 .petal {
-  animation: petalBreathe 7s var(--ease) infinite;
+  animation: petalBreathe 6s var(--ease) infinite;
 }
 
 .petalActive {
-  animation: lotusBreathe 5s var(--ease) infinite;
+  animation: petalBreatheActive 4.5s var(--ease) infinite;
+}
+
+.centerPulse {
+  animation: centerPulse 7s var(--ease) infinite;
 }
