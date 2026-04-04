@@ -77,9 +77,13 @@ export default function ExplorePage() {
         })}
       </div>
 
-      <p className={styles.hint}>
-        Natal chart, planets, houses, and journal — arriving soon.
-      </p>
+      <Link to="/explore/natal" className={styles.natalLink}>
+        <GlassCard className={styles.natalCard}>
+          <span className={styles.natalLabel}>Astrology</span>
+          <h2 className={styles.natalTitle}>Your natal chart</h2>
+          <p className={styles.natalSub}>The sky you were born under — planets, signs, houses.</p>
+        </GlassCard>
+      </Link>
     </div>
   );
 }

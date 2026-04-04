@@ -193,3 +193,25 @@
   font-style: italic;
   padding-top: var(--space-md);
 }
+
+.orbitLink {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  text-decoration: none;
+  color: inherit;
+  transition: opacity var(--transition);
+}
+
+.orbitLink:hover {
+  opacity: 0.85;
+}
+
+.orbitCaption {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  text-align: center;
+}

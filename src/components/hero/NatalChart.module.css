@@ -1,0 +1,14 @@
+.wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: var(--space-md) 0;
+}
+
+.svg {
+  width: var(--size, 340px);
+  height: var(--size, 340px);
+  max-width: 100%;
+  display: block;
+}

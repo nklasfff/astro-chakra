@@ -7,6 +7,7 @@ import HomePage from './pages/HomePage';
 import PlaceholderPage from './pages/PlaceholderPage';
 import ChakraDeepPage from './pages/ChakraDeepPage';
 import ExplorePage from './pages/ExplorePage';
+import NatalChartPage from './pages/NatalChartPage';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -27,6 +28,7 @@ function AppRoutes() {
         <Route path="/home" element={<HomePage />} />
         <Route path="/explore" element={<ExplorePage />} />
         <Route path="/explore/chakras/:chakraId" element={<ChakraDeepPage />} />
+        <Route path="/explore/natal" element={<NatalChartPage />} />
         <Route
           path="/relations"
           element={

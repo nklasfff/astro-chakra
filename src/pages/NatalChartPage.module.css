@@ -1,0 +1,137 @@
+.page {
+  padding: var(--space-lg) var(--space-md);
+  max-width: 640px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.backBtn {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  align-self: flex-start;
+  padding: var(--space-xs) 0;
+  transition: color var(--transition);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.backBtn:hover {
+  color: var(--text-bright);
+}
+
+.header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: var(--space-md);
+}
+
+.label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  font-weight: 300;
+  color: var(--text-bright);
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--text-secondary);
+}
+
+.note {
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-style: italic;
+  max-width: 440px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+.comingSoon {
+  text-align: center;
+  color: var(--text-muted);
+  font-style: italic;
+  padding: var(--space-xl) 0;
+}
+
+.planets {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.planetCard {
+  padding: var(--space-md) var(--space-lg);
+}
+
+.planetRow {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+}
+
+.planetGlyph {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  line-height: 1;
+  min-width: 40px;
+  text-align: center;
+  text-shadow: 0 0 16px currentColor;
+}
+
+.planetText {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.planetHeader {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.planetName {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: var(--text-bright);
+}
+
+.planetChakra {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.planetSign {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.98rem;
+  color: var(--text-secondary);
+}
+
+.planetDomain {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-style: italic;
+  line-height: 1.6;
+}

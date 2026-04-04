@@ -86,7 +86,10 @@ export default function HomePage() {
         )}
       </div>
 
-      <PlanetaryOrbit size={280} />
+      <Link to="/explore/natal" className={styles.orbitLink}>
+        <PlanetaryOrbit size={280} />
+        <p className={styles.orbitCaption}>See your natal chart →</p>
+      </Link>
 
       <GlassCard className={styles.card}>
         <span className={styles.label}>Ruling planet</span>
