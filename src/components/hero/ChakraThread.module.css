@@ -7,19 +7,28 @@
 }
 
 .svg {
-  width: var(--width, 320px);
+  width: var(--width, 340px);
   height: auto;
   max-width: 100%;
   display: block;
 }
 
-@keyframes threadBreathe {
-  0%, 100% { opacity: 0.8; }
-  50% { opacity: 1; }
+@keyframes threadWave {
+  0%, 100% { d: path('M 28 45 Q 150 30 272 45'); }
+  50%      { d: path('M 28 45 Q 150 60 272 45'); }
+}
+
+@keyframes bloomDrift {
+  0%, 100% { transform: translateY(-6px); opacity: 0.8; }
+  50%      { transform: translateY(6px); opacity: 1; }
+}
+
+.thread {
+  animation: threadWave 9s ease-in-out infinite;
 }
 
 .bloom {
-  animation: threadBreathe 6s var(--ease) infinite;
-  transform-box: fill-box;
+  animation: bloomDrift 9s ease-in-out infinite;
   transform-origin: center;
+  transform-box: fill-box;
 }

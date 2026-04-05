@@ -1,10 +1,9 @@
 import styles from './PlanetaryOrbit.module.css';
 
 /**
- * A watercolor orbital diagram — seven concentric rings with a planet
- * traveling each, at different speeds. The planets carry the chakra
- * colors, tying the astrology to the chakra system visually.
- * Uses SMIL animateTransform for reliable SVG orbital motion.
+ * Seven planets orbiting a center at different speeds.
+ * Uses CSS animations on SVG <g> wrappers (with CSS transform-origin)
+ * so the motion survives React route changes and component remounts.
  */
 const PLANETS = [
   { name: 'Saturn', color: '#c26848', speed: 280, startAngle: 18 },
@@ -38,11 +37,10 @@ export default function PlanetaryOrbit({ size = 260 }) {
           </filter>
         </defs>
 
-        {/* Center — the self */}
+        {/* Center */}
         <circle cx={cx} cy={cy} r="4" fill="var(--text-illustration)" opacity="0.8" />
         <circle cx={cx} cy={cy} r="9" fill="none" stroke="var(--line-medium)" strokeWidth="0.5" />
 
-        {/* Orbit rings + planets */}
         {PLANETS.map((planet, i) => {
           const r = baseRadius + i * ringSpacing;
           return (
@@ -56,23 +54,16 @@ export default function PlanetaryOrbit({ size = 260 }) {
                 stroke="var(--line-faint)"
                 strokeWidth="0.4"
               />
-              {/* Planet group — SMIL rotating animation around (cx, cy) */}
-              <g>
-                <animateTransform
-                  attributeName="transform"
-                  attributeType="XML"
-                  type="rotate"
-                  from={`${planet.startAngle} ${cx} ${cy}`}
-                  to={`${planet.startAngle + 360} ${cx} ${cy}`}
-                  dur={`${planet.speed}s`}
-                  repeatCount="indefinite"
-                />
+              {/* Rotating group — CSS animation around viewBox center */}
+              <g
+                className={styles.orbit}
+                style={{
+                  animationDuration: `${planet.speed}s`,
+                  transform: `rotate(${planet.startAngle}deg)`,
+                }}
+              >
                 <g transform={`translate(${cx} ${cy - r})`}>
-                  <circle
-                    r="9"
-                    fill={`url(#planet-${i})`}
-                    filter="url(#orbit-blur)"
-                  />
+                  <circle r="9" fill={`url(#planet-${i})`} filter="url(#orbit-blur)" />
                   <circle r="2.8" fill={planet.color} opacity="0.9" />
                 </g>
               </g>

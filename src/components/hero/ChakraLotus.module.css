@@ -13,9 +13,29 @@
   display: block;
 }
 
-/* Continuous color cycle — drifts through all 7 chakra hues.
-   Each petal uses the same animation but with a negative delay,
-   so they're always at different points in the cycle. */
+/* Rotation uses CSS transform on SVG <g> elements with transform-origin
+   set in viewBox coordinates. This works reliably across re-mounts. */
+@keyframes rotateCW {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes rotateCCW {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
+.outerRings {
+  transform-origin: 150px 150px;
+  animation: rotateCW 260s linear infinite;
+}
+
+.lotusLayer {
+  transform-origin: 150px 150px;
+  animation: rotateCCW 420s linear infinite;
+}
+
+/* Continuous color cycle — drifts through all 7 chakra hues */
 @keyframes petalColorCycle {
   0%     { fill: #c26848; }
   14.28% { fill: #dd7c5c; }
@@ -51,7 +71,7 @@
 .petalBloom {
   animation:
     petalColorCycle var(--cycle-duration, 35s) linear infinite,
-    bloomBreath 6s var(--ease) infinite;
+    bloomBreath 6s ease-in-out infinite;
 }
 
 .petalRing {
@@ -59,14 +79,14 @@
   opacity: 0.45;
   animation:
     petalStrokeCycle var(--cycle-duration, 35s) linear infinite,
-    bloomBreath 6s var(--ease) infinite;
+    bloomBreath 6s ease-in-out infinite;
 }
 
 .petalRingActive {
   stroke-width: 1;
   animation:
     petalStrokeCycle var(--cycle-duration, 35s) linear infinite,
-    bloomBreathActive 4.5s var(--ease) infinite;
+    bloomBreathActive 4.5s ease-in-out infinite;
 }
 
 @keyframes centerPulse {
@@ -75,5 +95,5 @@
 }
 
 .centerPulse {
-  animation: centerPulse 7s var(--ease) infinite;
+  animation: centerPulse 7s ease-in-out infinite;
 }

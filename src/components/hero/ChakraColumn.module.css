@@ -14,12 +14,36 @@
 }
 
 @keyframes bloomBreathe {
-  0%, 100% { opacity: 0.8; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.08); }
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
 }
 
 .bloom {
-  animation: bloomBreathe 6s var(--ease) infinite;
-  transform-box: fill-box;
+  animation: bloomBreathe 6s ease-in-out infinite;
+}
+
+/* Particles travelling along channel.
+   Top of channel: y=30 (40-10). Bottom: y=370 (360+10). */
+@keyframes particleAscend {
+  0%   { transform: translateY(0); opacity: 0.3; }
+  50%  { opacity: 0.9; }
+  100% { transform: translateY(-330px); opacity: 0.3; }
+}
+
+@keyframes particleDescend {
+  0%   { transform: translateY(0); opacity: 0.3; }
+  50%  { opacity: 0.9; }
+  100% { transform: translateY(330px); opacity: 0.3; }
+}
+
+.particleUp {
+  animation: particleAscend 16s ease-in-out infinite;
   transform-origin: center;
+  transform-box: fill-box;
+}
+
+.particleDown {
+  animation: particleDescend 16s ease-in-out 8s infinite;
+  transform-origin: center;
+  transform-box: fill-box;
 }

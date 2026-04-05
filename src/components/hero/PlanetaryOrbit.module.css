@@ -14,14 +14,19 @@
 }
 
 @keyframes orbitRotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from { transform: rotate(var(--start, 0deg)); }
+  to { transform: rotate(calc(var(--start, 0deg) + 360deg)); }
 }
 
+/* Override via inline style: each planet spins around SVG center */
 .orbit {
-  animation-name: orbitRotate;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
   transform-origin: 150px 150px;
   transform-box: fill-box;
+  animation-name: fullRotate;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes fullRotate {
+  to { transform: rotate(360deg); }
 }

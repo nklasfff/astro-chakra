@@ -2,11 +2,10 @@ import { CHAKRAS } from '../../engine/chakras';
 import styles from './ChakraLotus.module.css';
 
 /**
- * Watercolor 7-petal mandala with CONTINUOUS color-cycling — each petal
- * slowly drifts through all seven chakra colors over a long cycle,
- * offset so the flower always shows every colour but in shifting positions.
- * The lotus and its outer rings counter-rotate via SMIL.
- * Unique to astro-chakra.
+ * Watercolor 7-petal mandala.
+ * All motion handled by CSS keyframes (transform-origin based) — this
+ * survives React remounts when navigating between routes. SMIL
+ * animations can become paused or fail to restart, so we avoid them here.
  */
 export default function ChakraLotus({ activeChakraId, size = 280 }) {
   const cx = 150;
@@ -24,17 +23,8 @@ export default function ChakraLotus({ activeChakraId, size = 280 }) {
           </filter>
         </defs>
 
-        {/* Slow-rotating outer rings — SMIL for reliable SVG rotation */}
-        <g>
-          <animateTransform
-            attributeName="transform"
-            attributeType="XML"
-            type="rotate"
-            from={`0 ${cx} ${cy}`}
-            to={`360 ${cx} ${cy}`}
-            dur="260s"
-            repeatCount="indefinite"
-          />
+        {/* Outer dashed rings — CSS rotation */}
+        <g className={styles.outerRings}>
           <circle
             cx={cx}
             cy={cy}
@@ -55,28 +45,17 @@ export default function ChakraLotus({ activeChakraId, size = 280 }) {
           />
         </g>
 
-        {/* Whole lotus counter-rotates slowly */}
-        <g>
-          <animateTransform
-            attributeName="transform"
-            attributeType="XML"
-            type="rotate"
-            from={`0 ${cx} ${cy}`}
-            to={`-360 ${cx} ${cy}`}
-            dur="420s"
-            repeatCount="indefinite"
-          />
+        {/* Lotus petal layer — counter-rotates via CSS */}
+        <g className={styles.lotusLayer}>
           {CHAKRAS.map((chakra, i) => {
             const rotation = i * (360 / petalCount);
             const isActive = chakra.id === activeChakraId;
-            // Offset each petal's color cycle so they're always in different hues
             const animationDelay = `${-i * (cycleSeconds / petalCount)}s`;
             return (
               <g
                 key={chakra.id}
                 transform={`rotate(${rotation} ${cx} ${cy})`}
               >
-                {/* Watercolor bloom (soft, blurred, large) */}
                 <circle
                   cx={cx}
                   cy={cy - distance}
@@ -88,7 +67,6 @@ export default function ChakraLotus({ activeChakraId, size = 280 }) {
                   }}
                   filter="url(#lotus-blur)"
                 />
-                {/* Inner ring tracing the petal edge */}
                 <ellipse
                   cx={cx}
                   cy={cy - distance}

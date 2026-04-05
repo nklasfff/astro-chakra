@@ -2,9 +2,10 @@ import { CHAKRAS } from '../../engine/chakras';
 import styles from './ChakraColumn.module.css';
 
 /**
- * The sushumna — a vertical watercolor column of the seven chakras,
- * crown at top, root at bottom. The central channel breathes as energy
- * ascends and descends through it. Ambient light drifts between chakras.
+ * The sushumna — vertical watercolor column of the seven chakras.
+ * Crown at top, root at bottom. Two energy particles rise and fall along
+ * the central channel in an infinite cycle.
+ * Uses CSS animations only (no SMIL) so motion persists across remounts.
  */
 export default function ChakraColumn({ width = 180, height = 400 }) {
   const cx = 100;
@@ -12,7 +13,6 @@ export default function ChakraColumn({ width = 180, height = 400 }) {
   const bottomY = 360;
   const n = CHAKRAS.length;
   const step = (bottomY - topY) / (n - 1);
-  // Reverse: crown at top (index 6), root at bottom (index 0)
   const ordered = [...CHAKRAS].reverse();
 
   return (
@@ -40,7 +40,7 @@ export default function ChakraColumn({ width = 180, height = 400 }) {
           </filter>
         </defs>
 
-        {/* The central channel — glowing gradient line */}
+        {/* Central channel */}
         <line
           x1={cx}
           y1={topY - 10}
@@ -53,38 +53,22 @@ export default function ChakraColumn({ width = 180, height = 400 }) {
         />
 
         {/* Two travelling energy particles — one ascending, one descending */}
-        <circle cx={cx} cy={bottomY} r="2" fill="var(--text-illustration-bright)" opacity="0.7">
-          <animate
-            attributeName="cy"
-            values={`${bottomY}; ${topY}; ${bottomY}`}
-            dur="16s"
-            repeatCount="indefinite"
-          />
-          <animate
-            attributeName="opacity"
-            values="0.2; 0.8; 0.2"
-            dur="16s"
-            repeatCount="indefinite"
-          />
-        </circle>
-        <circle cx={cx} cy={topY} r="2" fill="var(--text-illustration-bright)" opacity="0.7">
-          <animate
-            attributeName="cy"
-            values={`${topY}; ${bottomY}; ${topY}`}
-            dur="16s"
-            repeatCount="indefinite"
-            begin="8s"
-          />
-          <animate
-            attributeName="opacity"
-            values="0.2; 0.8; 0.2"
-            dur="16s"
-            repeatCount="indefinite"
-            begin="8s"
-          />
-        </circle>
+        <circle
+          cx={cx}
+          cy={bottomY}
+          r="2.4"
+          fill="var(--text-illustration-bright)"
+          className={styles.particleUp}
+        />
+        <circle
+          cx={cx}
+          cy={topY}
+          r="2.4"
+          fill="var(--text-illustration-bright)"
+          className={styles.particleDown}
+        />
 
-        {/* Seven chakra blooms (top to bottom: crown → root) */}
+        {/* Seven chakra blooms (crown → root) */}
         {ordered.map((chakra, i) => {
           const y = topY + i * step;
           const chakraIndex = 6 - i;
@@ -92,7 +76,7 @@ export default function ChakraColumn({ width = 180, height = 400 }) {
             <g
               key={chakra.id}
               className={styles.bloom}
-              style={{ animationDelay: `${i * 0.7}s` }}
+              style={{ animationDelay: `${-i * 0.9}s` }}
             >
               <ellipse
                 cx={cx}
