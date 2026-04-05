@@ -3,15 +3,22 @@ import { useUser } from '../context/UserContext';
 import { getJourneyPosition, getSpiralLabel, getSpiralMeaning } from '../engine/chakraJourney';
 import { getChakraStates, hasChakraStates } from '../engine/chakraStates';
 import JourneyTimeline from '../components/hero/JourneyTimeline';
+import SpiralSwitcher from '../components/hero/SpiralSwitcher';
 import GlassCard from '../components/common/GlassCard';
 import ExpandableCard from '../components/common/ExpandableCard';
 import styles from './JourneyPage.module.css';
+
+const MAX_AGE = 146; // 3 spirals × 49 years - 1
+const spiralForAge = (age) => Math.min(3, Math.max(1, Math.floor(age / 49) + 1));
 
 export default function JourneyPage() {
   const { getDerivedData } = useUser();
   const data = getDerivedData();
   const currentAge = data?.age ?? null;
   const [selectedAge, setSelectedAge] = useState(currentAge);
+  // Which spiral the figure is showing. Follows selectedAge by default,
+  // but can be overridden by tapping the SpiralSwitcher.
+  const [viewSpiralOverride, setViewSpiralOverride] = useState(null);
 
   const position = useMemo(
     () => (selectedAge != null ? getJourneyPosition(selectedAge) : null),
@@ -24,8 +31,31 @@ export default function JourneyPage() {
   const primaryStates = hasChakraStates(primary.id) ? getChakraStates(primary.id) : null;
   const subStates = hasChakraStates(sub.id) ? getChakraStates(sub.id) : null;
 
-  const activeSpiral = Math.floor(selectedAge / 49) + 1;
+  // The spiral actually rendered in the figure.
+  // If the user has tapped a spiral dot AND the selected age is already in
+  // that spiral, respect it; otherwise follow the selected age.
+  const selectedSpiral = spiralForAge(selectedAge);
+  const activeSpiral =
+    viewSpiralOverride && viewSpiralOverride === selectedSpiral
+      ? viewSpiralOverride
+      : selectedSpiral;
   const isViewingCurrent = selectedAge === currentAge;
+
+  const handleSelectSpiral = (s) => {
+    setViewSpiralOverride(s);
+    // Jump selectedAge to the user's own age if it falls in this spiral,
+    // otherwise to the first year of the spiral.
+    if (currentAge != null && spiralForAge(currentAge) === s) {
+      setSelectedAge(currentAge);
+    } else {
+      setSelectedAge((s - 1) * 49);
+    }
+  };
+
+  const handleSetSelectedAge = (next) => {
+    setViewSpiralOverride(null);
+    setSelectedAge(next);
+  };
 
   return (
     <div className={styles.page}>
@@ -37,11 +67,13 @@ export default function JourneyPage() {
         </p>
       </header>
 
+      <SpiralSwitcher activeSpiral={activeSpiral} onSelect={handleSelectSpiral} />
+
       <JourneyTimeline
         spiral={activeSpiral}
         currentAge={currentAge}
         selectedAge={selectedAge}
-        onSelectAge={setSelectedAge}
+        onSelectAge={handleSetSelectedAge}
         size={340}
       />
 
@@ -49,7 +81,7 @@ export default function JourneyPage() {
       <div className={styles.scrubber}>
         <button
           className={styles.scrubBtn}
-          onClick={() => setSelectedAge(Math.max(0, selectedAge - 1))}
+          onClick={() => handleSetSelectedAge(Math.max(0, selectedAge - 1))}
           aria-label="Previous year"
         >
           ‹
@@ -57,14 +89,14 @@ export default function JourneyPage() {
         <div className={styles.scrubCenter}>
           <span className={styles.scrubAge}>age {selectedAge}</span>
           {!isViewingCurrent && (
-            <button className={styles.scrubReset} onClick={() => setSelectedAge(currentAge)}>
+            <button className={styles.scrubReset} onClick={() => handleSetSelectedAge(currentAge)}>
               back to now
             </button>
           )}
         </div>
         <button
           className={styles.scrubBtn}
-          onClick={() => setSelectedAge(Math.min(98, selectedAge + 1))}
+          onClick={() => handleSetSelectedAge(Math.min(MAX_AGE, selectedAge + 1))}
           aria-label="Next year"
         >
           ›

@@ -1,0 +1,58 @@
+.wrap {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--space-lg);
+  padding: 0 var(--space-md);
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: transparent;
+  border: none;
+  padding: 6px 8px;
+  cursor: pointer;
+  font-family: var(--font-display);
+  color: var(--text-muted);
+  transition: color var(--transition), transform var(--transition);
+  -webkit-tap-highlight-color: transparent;
+  min-width: 72px;
+}
+
+.item:hover {
+  color: var(--text-secondary);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  background: transparent;
+  transition: all var(--transition);
+}
+
+.active {
+  color: var(--text-bright);
+}
+
+.active .dot {
+  background: currentColor;
+  box-shadow: 0 0 10px currentColor;
+}
+
+.label {
+  font-style: italic;
+  font-size: 0.82rem;
+  line-height: 1.1;
+}
+
+.range {
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  font-style: italic;
+}
