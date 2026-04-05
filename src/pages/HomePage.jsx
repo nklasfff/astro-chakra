@@ -4,6 +4,7 @@ import { getGreeting } from '../utils/dateUtils';
 import { CHAKRAS } from '../engine/chakras';
 import { getChakraDeep, hasChakraDeep } from '../engine/chakraDeep';
 import GlassCard from '../components/common/GlassCard';
+import ExpandableCard from '../components/common/ExpandableCard';
 import ChakraLotus from '../components/hero/ChakraLotus';
 import ChakraThread from '../components/hero/ChakraThread';
 import PlanetaryOrbit from '../components/hero/PlanetaryOrbit';
@@ -59,11 +60,13 @@ export default function HomePage() {
       <ChakraThread width={340} />
 
       {deep && (
-        <GlassCard className={styles.card} glowColor={`${chakra.hex}25`}>
-          <span className={styles.label}>Core theme</span>
-          <h2 className={styles.cardTitle}>{deep.coreTheme.title}</h2>
+        <ExpandableCard
+          label="Core theme"
+          title={deep.coreTheme.title}
+          glowColor={`${chakra.hex}25`}
+        >
           <p className={styles.cardBody}>{deep.coreTheme.gift}</p>
-        </GlassCard>
+        </ExpandableCard>
       )}
 
       <div className={styles.neighbors}>
@@ -97,9 +100,7 @@ export default function HomePage() {
         <p className={styles.orbitCaption}>See your natal chart →</p>
       </Link>
 
-      <GlassCard className={styles.card}>
-        <span className={styles.label}>Ruling planet</span>
-        <h2 className={styles.cardTitle}>{chakra.planet}</h2>
+      <ExpandableCard label="Ruling planet" title={chakra.planet}>
         {deep ? (
           <p className={styles.cardBody}>{deep.astrology.planetBody}</p>
         ) : (
@@ -110,14 +111,12 @@ export default function HomePage() {
         <p className={styles.cardMeta}>
           Resonant signs: {chakra.zodiac.join(', ')}
         </p>
-      </GlassCard>
+      </ExpandableCard>
 
       {deep && (
-        <GlassCard className={styles.card}>
-          <span className={styles.label}>A practice for today</span>
-          <h2 className={styles.cardTitle}>{deep.practices[0].title}</h2>
+        <ExpandableCard label="A practice for today" title={deep.practices[0].title}>
           <p className={styles.cardBody}>{deep.practices[0].body}</p>
-        </GlassCard>
+        </ExpandableCard>
       )}
 
       <SpiralIllustration size={200} />

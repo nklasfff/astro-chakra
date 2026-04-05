@@ -1,0 +1,60 @@
+.card {
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition-fast);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.card:active {
+  transform: scale(0.995);
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-md);
+}
+
+.headText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.label {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 300;
+  color: var(--text-bright);
+  line-height: 1.2;
+}
+
+.chevron {
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  opacity: 0.6;
+  flex-shrink: 0;
+  width: 24px;
+  text-align: center;
+  line-height: 1;
+  transition: opacity var(--transition);
+}
+
+.card:hover .chevron {
+  opacity: 1;
+}
+
+.body {
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--glass-border);
+  animation: fadeDown 0.3s var(--ease-out) both;
+}

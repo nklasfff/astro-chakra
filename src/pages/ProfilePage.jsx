@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
 import { computeNatalChart } from '../engine/natal';
-import BirthSignature from '../components/hero/BirthSignature';
+import CosmicDNA from '../components/hero/CosmicDNA';
 import GlassCard from '../components/common/GlassCard';
 import styles from './ProfilePage.module.css';
 
@@ -47,7 +47,7 @@ export default function ProfilePage() {
         <h1 className={styles.title}>Your signature</h1>
       </header>
 
-      <BirthSignature sun={chart.sun} moon={chart.moon} chakra={chakra} size={280} />
+      <CosmicDNA chart={chart} chakra={chakra} size={340} />
 
       <p className={styles.poeticLine}>
         {chart.sun.sign.name} sun, {chart.moon.sign.name} moon, {chakra.name.toLowerCase()} chakra.

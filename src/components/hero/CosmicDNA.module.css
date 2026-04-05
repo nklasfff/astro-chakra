@@ -1,0 +1,63 @@
+.wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: var(--space-md) 0;
+}
+
+.svg {
+  width: var(--size, 320px);
+  height: var(--size, 320px);
+  max-width: 100%;
+  display: block;
+}
+
+@keyframes rotateCW {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes rotateCCW {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
+.outerRing {
+  transform-origin: 200px 200px;
+  animation: rotateCCW 120s linear infinite;
+}
+
+.petalRing {
+  transform-origin: 200px 200px;
+  animation: rotateCW 180s linear infinite;
+}
+
+@keyframes petalBreath {
+  0%, 100% { opacity: 0.65; }
+  50% { opacity: 1; }
+}
+
+.petal {
+  animation: petalBreath 5s ease-in-out infinite;
+}
+
+@keyframes coreBreath {
+  0%, 100% { opacity: 0.85; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.04); }
+}
+
+.core {
+  transform-origin: 200px 200px;
+  transform-box: fill-box;
+  animation: coreBreath 6s ease-in-out infinite;
+}
+
+@keyframes branchPulse {
+  0%, 100% { opacity: 0.85; }
+  50% { opacity: 1; }
+}
+
+.branchNode {
+  animation: branchPulse 5s ease-in-out infinite;
+}
