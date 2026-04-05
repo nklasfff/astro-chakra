@@ -144,43 +144,78 @@
   border-color: var(--text-secondary);
 }
 
-.friendCard {
-  padding: var(--space-md) var(--space-lg);
+/* Signature pair card */
+.signatureCard {
+  padding: var(--space-lg);
+  position: relative;
 }
 
-.friendHeader {
+.signatureRow {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  align-items: flex-start;
   gap: var(--space-md);
 }
 
-.friendLabel {
-  font-size: 0.68rem;
+.sigSide {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.sigWho {
+  font-size: 0.62rem;
   text-transform: uppercase;
   letter-spacing: 0.14em;
   color: var(--text-muted);
-  display: block;
-  margin-bottom: 4px;
+  font-style: italic;
 }
 
-.friendSuns {
+.sigGlyph {
   font-family: var(--font-display);
-  font-size: 1.05rem;
-  color: var(--text-primary);
+  font-size: 1.9rem;
+  line-height: 1;
+  filter: drop-shadow(0 0 6px currentColor);
+  margin: 2px 0;
+}
+
+.sigSign {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--text-bright);
+}
+
+.sigMoon {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.82rem;
+  opacity: 0.85;
+  margin-top: 2px;
+}
+
+.sigDivider {
+  width: 1px;
+  height: 80px;
+  background: var(--glass-border);
+  flex-shrink: 0;
 }
 
 .removeBtn {
   background: transparent;
   border: none;
   color: var(--text-muted);
-  font-size: 0.7rem;
+  font-size: 0.64rem;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   cursor: pointer;
   padding: 4px 8px;
   opacity: 0.5;
   transition: all var(--transition);
+  position: absolute;
+  bottom: 8px;
+  right: var(--space-md);
 }
 
 .removeBtn:hover {
@@ -188,8 +223,70 @@
   color: var(--chakra-root);
 }
 
+/* Chakra resonance */
+.resonanceCard {
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.resonanceLabel {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+  padding-bottom: var(--space-xs);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.resonanceItem {
+  display: flex;
+  gap: var(--space-md);
+  align-items: flex-start;
+}
+
+.resonanceDevanagari {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 300;
+  line-height: 1;
+  min-width: 42px;
+  text-align: center;
+  text-shadow: 0 0 16px currentColor;
+  flex-shrink: 0;
+}
+
+.resonanceText {
+  flex: 1;
+}
+
+.resonanceName {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 300;
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+
+.resonanceBody {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+/* Synastry aspects */
 .aspectsCard {
   padding: var(--space-lg);
+}
+
+.aspectsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: var(--space-md);
 }
 
 .aspectsLabel {
@@ -197,8 +294,15 @@
   text-transform: uppercase;
   letter-spacing: 0.14em;
   color: var(--text-muted);
-  display: block;
-  margin-bottom: var(--space-md);
+}
+
+.aspectsHint {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  font-style: italic;
+  opacity: 0.7;
 }
 
 .aspects {
@@ -206,75 +310,7 @@
   flex-direction: column;
 }
 
-.aspect {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr auto;
-  align-items: center;
-  gap: var(--space-sm);
-  padding: 10px 0;
-  border-bottom: 1px solid var(--glass-border);
-  font-size: 0.84rem;
-}
-
-.aspect:last-child {
-  border-bottom: none;
-}
-
-.aspectSide {
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-  min-width: 0;
-}
-
-.aspectGlyph {
-  font-family: var(--font-display);
-  font-size: 1rem;
-  line-height: 1;
-  filter: drop-shadow(0 0 3px currentColor);
-  flex-shrink: 0;
-}
-
-.aspectName {
-  font-family: var(--font-display);
-  font-size: 0.86rem;
-  color: var(--text-primary);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.aspectCore {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1px;
-  min-width: 58px;
-}
-
-.aspectSymbol {
-  font-family: var(--font-display);
-  font-size: 0.95rem;
-  color: var(--text-secondary);
-  line-height: 1;
-}
-
-.aspectMood {
-  font-size: 0.58rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--text-muted);
-}
-
-.aspectOrb {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: 0.78rem;
-  color: var(--text-muted);
-  min-width: 36px;
-  text-align: right;
-}
-
+/* Add form */
 .addCard {
   padding: var(--space-lg);
   display: flex;

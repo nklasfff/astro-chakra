@@ -2,26 +2,12 @@ import { useState, useEffect, useMemo } from 'react';
 import { useUser } from '../context/UserContext';
 import { computeNatalChart } from '../engine/natal';
 import { computeTransits } from '../engine/transits';
+import { compareCharts, CHAKRA_RESONANCE } from '../engine/chakraResonance';
 import { loadFriends, addFriend, deleteFriend } from '../utils/friendStore';
 import TwoSkies from '../components/hero/TwoSkies';
 import GlassCard from '../components/common/GlassCard';
+import AspectRow from '../components/common/AspectRow';
 import styles from './RelationsPage.module.css';
-
-const ASPECT_GLYPHS = {
-  conjunction: '☌',
-  sextile: '⚹',
-  square: '□',
-  trine: '△',
-  opposition: '☍',
-};
-
-const ASPECT_MOOD = {
-  conjunction: 'fusing',
-  sextile: 'supporting',
-  square: 'activating',
-  trine: 'flowing',
-  opposition: 'balancing',
-};
 
 export default function RelationsPage() {
   const { profile } = useUser();
@@ -49,11 +35,15 @@ export default function RelationsPage() {
 
   const synastry = useMemo(() => {
     if (!myChart || !theirChart) return [];
-    // Treat their chart as "transit" and yours as "natal" → produces cross-chart aspects.
     const personalIds = new Set(['sun', 'moon', 'mercury', 'venus', 'mars']);
     return computeTransits(theirChart, myChart)
       .filter((a) => personalIds.has(a.transit.id) || personalIds.has(a.natal.id))
       .slice(0, 8);
+  }, [myChart, theirChart]);
+
+  const comparison = useMemo(() => {
+    if (!myChart || !theirChart) return null;
+    return compareCharts(myChart, theirChart);
   }, [myChart, theirChart]);
 
   const handleAdd = () => {
@@ -89,14 +79,14 @@ export default function RelationsPage() {
 
       <TwoSkies
         size={260}
-        colorA="var(--chakra-heart)"
-        colorB={selectedFriend ? 'var(--chakra-sacral)' : 'var(--chakra-throat)'}
+        colorA={myChart ? `var(--chakra-${myChart.sun.chakra})` : 'var(--chakra-heart)'}
+        colorB={theirChart ? `var(--chakra-${theirChart.sun.chakra})` : 'var(--chakra-throat)'}
       />
 
       {friends.length === 0 && !showAdd && (
         <div className={styles.empty}>
           <p className={styles.emptyText}>
-            No one yet. Add someone whose sky you want to understand alongside yours.
+            No one here yet. Add someone whose sky you want to know beside yours.
           </p>
           <button className={styles.primaryBtn} onClick={() => setShowAdd(true)}>
             Add someone
@@ -121,66 +111,126 @@ export default function RelationsPage() {
             </button>
           </div>
 
-          {selectedFriend && theirChart && (
+          {selectedFriend && theirChart && myChart && (
             <>
-              <GlassCard className={styles.friendCard}>
-                <div className={styles.friendHeader}>
-                  <div>
-                    <span className={styles.friendLabel}>You & {selectedFriend.name}</span>
-                    <p className={styles.friendSuns}>
-                      <span style={{ color: `var(--chakra-${myChart.sun.chakra})` }}>☉</span>{' '}
-                      {myChart.sun.sign.name}{' · '}
-                      <span style={{ color: `var(--chakra-${theirChart.sun.chakra})` }}>☉</span>{' '}
-                      {theirChart.sun.sign.name}
-                    </p>
+              {/* Signature pair card */}
+              <GlassCard className={styles.signatureCard}>
+                <div className={styles.signatureRow}>
+                  <div className={styles.sigSide}>
+                    <span className={styles.sigWho}>you</span>
+                    <div
+                      className={styles.sigGlyph}
+                      style={{ color: `var(--chakra-${myChart.sun.chakra})` }}
+                    >
+                      ☉
+                    </div>
+                    <span className={styles.sigSign}>
+                      {myChart.sun.sign.glyph} {myChart.sun.sign.name}
+                    </span>
+                    <span
+                      className={styles.sigMoon}
+                      style={{ color: `var(--chakra-${myChart.moon.chakra})` }}
+                    >
+                      ☽ {myChart.moon.sign.glyph} {myChart.moon.sign.name}
+                    </span>
                   </div>
-                  <button
-                    className={styles.removeBtn}
-                    onClick={() => handleDelete(selectedFriend.id)}
-                  >
-                    remove
-                  </button>
+                  <div className={styles.sigDivider} />
+                  <div className={styles.sigSide}>
+                    <span className={styles.sigWho}>{selectedFriend.name.toLowerCase()}</span>
+                    <div
+                      className={styles.sigGlyph}
+                      style={{ color: `var(--chakra-${theirChart.sun.chakra})` }}
+                    >
+                      ☉
+                    </div>
+                    <span className={styles.sigSign}>
+                      {theirChart.sun.sign.glyph} {theirChart.sun.sign.name}
+                    </span>
+                    <span
+                      className={styles.sigMoon}
+                      style={{ color: `var(--chakra-${theirChart.moon.chakra})` }}
+                    >
+                      ☽ {theirChart.moon.sign.glyph} {theirChart.moon.sign.name}
+                    </span>
+                  </div>
                 </div>
+                <button
+                  className={styles.removeBtn}
+                  onClick={() => handleDelete(selectedFriend.id)}
+                >
+                  remove {selectedFriend.name}
+                </button>
               </GlassCard>
 
+              {/* Chakra resonance */}
+              {comparison && comparison.shared.length > 0 && (
+                <GlassCard className={styles.resonanceCard}>
+                  <span className={styles.resonanceLabel}>Chakra resonance</span>
+                  {comparison.shared.slice(0, 2).map(({ chakra }) => (
+                    <div key={chakra.id} className={styles.resonanceItem}>
+                      <span
+                        className={styles.resonanceDevanagari}
+                        style={{ color: chakra.hex }}
+                      >
+                        {chakra.devanagari}
+                      </span>
+                      <div className={styles.resonanceText}>
+                        <h3
+                          className={styles.resonanceName}
+                          style={{ color: chakra.hex }}
+                        >
+                          Shared {chakra.name.toLowerCase()}
+                        </h3>
+                        <p className={styles.resonanceBody}>
+                          {CHAKRA_RESONANCE[chakra.id].shared}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                  {comparison.contrast.slice(0, 1).map(({ chakra, aVal, bVal }) => (
+                    <div key={`c-${chakra.id}`} className={styles.resonanceItem}>
+                      <span
+                        className={styles.resonanceDevanagari}
+                        style={{ color: chakra.hex, opacity: 0.6 }}
+                      >
+                        {chakra.devanagari}
+                      </span>
+                      <div className={styles.resonanceText}>
+                        <h3
+                          className={styles.resonanceName}
+                          style={{ color: chakra.hex }}
+                        >
+                          {aVal > bVal ? 'You lead at' : 'They lead at'} {chakra.name.toLowerCase()}
+                        </h3>
+                        <p className={styles.resonanceBody}>
+                          {CHAKRA_RESONANCE[chakra.id].oneLeads}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </GlassCard>
+              )}
+
+              {/* Synastry aspects */}
               {synastry.length > 0 && (
                 <GlassCard className={styles.aspectsCard}>
-                  <span className={styles.aspectsLabel}>Between your skies</span>
+                  <div className={styles.aspectsHeader}>
+                    <span className={styles.aspectsLabel}>Between your skies</span>
+                    <span className={styles.aspectsHint}>Tap to read</span>
+                  </div>
                   <div className={styles.aspects}>
                     {synastry.map((a, i) => (
-                      <div key={i} className={styles.aspect}>
-                        <div className={styles.aspectSide}>
-                          <span
-                            className={styles.aspectGlyph}
-                            style={{ color: `var(--chakra-${a.transit.chakra})` }}
-                          >
-                            {a.transit.glyph}
-                          </span>
-                          <span className={styles.aspectName}>
-                            their {a.transit.name}
-                          </span>
-                        </div>
-                        <div className={styles.aspectCore}>
-                          <span className={styles.aspectSymbol}>
-                            {ASPECT_GLYPHS[a.aspect.id]}
-                          </span>
-                          <span className={styles.aspectMood}>
-                            {ASPECT_MOOD[a.aspect.id]}
-                          </span>
-                        </div>
-                        <div className={styles.aspectSide}>
-                          <span
-                            className={styles.aspectGlyph}
-                            style={{ color: `var(--chakra-${a.natal.chakra})` }}
-                          >
-                            {a.natal.glyph}
-                          </span>
-                          <span className={styles.aspectName}>
-                            your {a.natal.name}
-                          </span>
-                        </div>
-                        <span className={styles.aspectOrb}>{a.orb.toFixed(1)}°</span>
-                      </div>
+                      <AspectRow
+                        key={i}
+                        leftPlanet={a.transit}
+                        rightPlanet={a.natal}
+                        leftLabel={selectedFriend.name.toLowerCase()}
+                        rightLabel="your"
+                        aspect={a.aspect}
+                        orb={a.orb}
+                        exact={a.exact}
+                        context="synastry"
+                      />
                     ))}
                   </div>
                 </GlassCard>

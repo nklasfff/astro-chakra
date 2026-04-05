@@ -13,29 +13,65 @@
   display: block;
 }
 
-/* Petals animate opacity only — scale would conflict with SMIL rotation.
-   The visible motion comes from SMIL rotation of the parent group. */
-@keyframes petalBreathe {
-  0%, 100% { opacity: 0.7; }
-  50% { opacity: 1; }
+/* Continuous color cycle — drifts through all 7 chakra hues.
+   Each petal uses the same animation but with a negative delay,
+   so they're always at different points in the cycle. */
+@keyframes petalColorCycle {
+  0%     { fill: #c26848; }
+  14.28% { fill: #dd7c5c; }
+  28.57% { fill: #d5a743; }
+  42.86% { fill: #7ea158; }
+  57.14% { fill: #628db2; }
+  71.43% { fill: #6e6aa8; }
+  85.71% { fill: #9f7bc0; }
+  100%   { fill: #c26848; }
 }
 
-@keyframes petalBreatheActive {
-  0%, 100% { opacity: 0.85; }
-  50% { opacity: 1; }
+@keyframes petalStrokeCycle {
+  0%     { stroke: #c26848; }
+  14.28% { stroke: #dd7c5c; }
+  28.57% { stroke: #d5a743; }
+  42.86% { stroke: #7ea158; }
+  57.14% { stroke: #628db2; }
+  71.43% { stroke: #6e6aa8; }
+  85.71% { stroke: #9f7bc0; }
+  100%   { stroke: #c26848; }
+}
+
+@keyframes bloomBreath {
+  0%, 100% { opacity: 0.52; }
+  50% { opacity: 0.78; }
+}
+
+@keyframes bloomBreathActive {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 0.95; }
+}
+
+.petalBloom {
+  animation:
+    petalColorCycle var(--cycle-duration, 35s) linear infinite,
+    bloomBreath 6s var(--ease) infinite;
+}
+
+.petalRing {
+  stroke-width: 0.55;
+  opacity: 0.45;
+  animation:
+    petalStrokeCycle var(--cycle-duration, 35s) linear infinite,
+    bloomBreath 6s var(--ease) infinite;
+}
+
+.petalRingActive {
+  stroke-width: 1;
+  animation:
+    petalStrokeCycle var(--cycle-duration, 35s) linear infinite,
+    bloomBreathActive 4.5s var(--ease) infinite;
 }
 
 @keyframes centerPulse {
   0%, 100% { opacity: 0.5; }
   50% { opacity: 0.85; }
-}
-
-.petal {
-  animation: petalBreathe 6s var(--ease) infinite;
-}
-
-.petalActive {
-  animation: petalBreatheActive 4.5s var(--ease) infinite;
 }
 
 .centerPulse {

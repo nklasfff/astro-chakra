@@ -2,10 +2,10 @@ import { CHAKRAS } from '../../engine/chakras';
 import styles from './ChakraLotus.module.css';
 
 /**
- * Watercolor 7-petal mandala with:
- * - Slow continuous rotation of the whole form (SMIL, reliable)
- * - Each petal breathing in scale (staggered)
- * - Active chakra has a stronger pulse
+ * Watercolor 7-petal mandala with CONTINUOUS color-cycling — each petal
+ * slowly drifts through all seven chakra colors over a long cycle,
+ * offset so the flower always shows every colour but in shifting positions.
+ * The lotus and its outer rings counter-rotate via SMIL.
  * Unique to astro-chakra.
  */
 export default function ChakraLotus({ activeChakraId, size = 280 }) {
@@ -13,20 +13,14 @@ export default function ChakraLotus({ activeChakraId, size = 280 }) {
   const cy = 150;
   const petalCount = 7;
   const distance = 64;
+  const cycleSeconds = 35;
 
   return (
     <div className={styles.wrap} style={{ '--size': `${size}px` }}>
       <svg viewBox="0 0 300 300" className={styles.svg} aria-hidden="true">
         <defs>
-          {CHAKRAS.map((c, i) => (
-            <radialGradient key={`g-${i}`} id={`petal-${i}`} cx="50%" cy="40%" r="60%">
-              <stop offset="0%" stopColor={c.hex} stopOpacity="0.7" />
-              <stop offset="55%" stopColor={c.hex} stopOpacity="0.28" />
-              <stop offset="100%" stopColor={c.hex} stopOpacity="0" />
-            </radialGradient>
-          ))}
           <filter id="lotus-blur">
-            <feGaussianBlur stdDeviation="1.2" />
+            <feGaussianBlur stdDeviation="2.5" />
           </filter>
         </defs>
 
@@ -38,7 +32,7 @@ export default function ChakraLotus({ activeChakraId, size = 280 }) {
             type="rotate"
             from={`0 ${cx} ${cy}`}
             to={`360 ${cx} ${cy}`}
-            dur="240s"
+            dur="260s"
             repeatCount="indefinite"
           />
           <circle
@@ -61,7 +55,7 @@ export default function ChakraLotus({ activeChakraId, size = 280 }) {
           />
         </g>
 
-        {/* The whole lotus rotates slowly in the opposite direction */}
+        {/* Whole lotus counter-rotates slowly */}
         <g>
           <animateTransform
             attributeName="transform"
@@ -69,36 +63,43 @@ export default function ChakraLotus({ activeChakraId, size = 280 }) {
             type="rotate"
             from={`0 ${cx} ${cy}`}
             to={`-360 ${cx} ${cy}`}
-            dur="360s"
+            dur="420s"
             repeatCount="indefinite"
           />
           {CHAKRAS.map((chakra, i) => {
             const rotation = i * (360 / petalCount);
             const isActive = chakra.id === activeChakraId;
+            // Offset each petal's color cycle so they're always in different hues
+            const animationDelay = `${-i * (cycleSeconds / petalCount)}s`;
             return (
               <g
                 key={chakra.id}
                 transform={`rotate(${rotation} ${cx} ${cy})`}
-                className={`${styles.petal} ${isActive ? styles.petalActive : ''}`}
-                style={{ animationDelay: `${i * 0.5}s` }}
               >
-                <ellipse
+                {/* Watercolor bloom (soft, blurred, large) */}
+                <circle
                   cx={cx}
                   cy={cy - distance}
-                  rx="40"
-                  ry="54"
-                  fill={`url(#petal-${i})`}
+                  r="48"
+                  className={styles.petalBloom}
+                  style={{
+                    animationDelay,
+                    '--cycle-duration': `${cycleSeconds}s`,
+                  }}
                   filter="url(#lotus-blur)"
                 />
+                {/* Inner ring tracing the petal edge */}
                 <ellipse
                   cx={cx}
                   cy={cy - distance}
                   rx="26"
                   ry="38"
                   fill="none"
-                  stroke={chakra.hex}
-                  strokeWidth={isActive ? '1' : '0.55'}
-                  opacity={isActive ? '0.7' : '0.38'}
+                  className={`${styles.petalRing} ${isActive ? styles.petalRingActive : ''}`}
+                  style={{
+                    animationDelay,
+                    '--cycle-duration': `${cycleSeconds}s`,
+                  }}
                 />
               </g>
             );
