@@ -1,8 +1,9 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useUser } from '../context/UserContext';
 import { getJourneyPosition, getSpiralLabel, getSpiralMeaning } from '../engine/chakraJourney';
 import { getChakraStates, hasChakraStates } from '../engine/chakraStates';
 import JourneyTimeline from '../components/hero/JourneyTimeline';
+import SpiralSwitcher from '../components/hero/SpiralSwitcher';
 import GlassCard from '../components/common/GlassCard';
 import ExpandableCard from '../components/common/ExpandableCard';
 import styles from './JourneyPage.module.css';
@@ -12,11 +13,21 @@ export default function JourneyPage() {
   const data = getDerivedData();
   const currentAge = data?.age ?? null;
   const [selectedAge, setSelectedAge] = useState(currentAge);
+  const [viewSpiral, setViewSpiral] = useState(
+    currentAge != null ? Math.min(3, Math.floor(currentAge / 49) + 1) : 1
+  );
 
   const position = useMemo(
     () => (selectedAge != null ? getJourneyPosition(selectedAge) : null),
     [selectedAge]
   );
+
+  // When the scrubber crosses a spiral boundary, follow along.
+  useEffect(() => {
+    if (selectedAge == null) return;
+    const ageSpiral = Math.min(3, Math.floor(selectedAge / 49) + 1);
+    if (ageSpiral !== viewSpiral) setViewSpiral(ageSpiral);
+  }, [selectedAge]);
 
   if (!data || !position) return null;
 
@@ -24,8 +35,20 @@ export default function JourneyPage() {
   const primaryStates = hasChakraStates(primary.id) ? getChakraStates(primary.id) : null;
   const subStates = hasChakraStates(sub.id) ? getChakraStates(sub.id) : null;
 
-  const activeSpiral = Math.floor(selectedAge / 49) + 1;
   const isViewingCurrent = selectedAge === currentAge;
+
+  const handleSelectSpiral = (n) => {
+    setViewSpiral(n);
+    // Move selectedAge into the chosen spiral — to the user's own age if it
+    // falls there, otherwise to the middle of that spiral.
+    const spiralStart = (n - 1) * 49;
+    const spiralEnd = n * 49 - 1;
+    if (currentAge != null && currentAge >= spiralStart && currentAge <= spiralEnd) {
+      setSelectedAge(currentAge);
+    } else {
+      setSelectedAge(spiralStart + 24);
+    }
+  };
 
   return (
     <div className={styles.page}>
@@ -37,8 +60,10 @@ export default function JourneyPage() {
         </p>
       </header>
 
+      <SpiralSwitcher viewSpiral={viewSpiral} onSelect={handleSelectSpiral} />
+
       <JourneyTimeline
-        spiral={activeSpiral}
+        spiral={viewSpiral}
         currentAge={currentAge}
         selectedAge={selectedAge}
         onSelectAge={setSelectedAge}
@@ -64,7 +89,7 @@ export default function JourneyPage() {
         </div>
         <button
           className={styles.scrubBtn}
-          onClick={() => setSelectedAge(Math.min(98, selectedAge + 1))}
+          onClick={() => setSelectedAge(Math.min(146, selectedAge + 1))}
           aria-label="Next year"
         >
           ›
