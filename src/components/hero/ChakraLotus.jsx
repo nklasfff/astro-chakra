@@ -51,7 +51,7 @@ export default function ChakraLotus({ activeChakraId, size = 280 }) {
                   <animate
                     attributeName="r"
                     values="44;58;44"
-                    dur="6s"
+                    dur="10s"
                     repeatCount="indefinite"
                     begin={breathOffset}
                   />
@@ -71,7 +71,7 @@ export default function ChakraLotus({ activeChakraId, size = 280 }) {
                   <animate
                     attributeName="r"
                     values="18;26;18"
-                    dur="5s"
+                    dur="8s"
                     repeatCount="indefinite"
                     begin={breathOffset}
                   />
@@ -90,7 +90,7 @@ export default function ChakraLotus({ activeChakraId, size = 280 }) {
                   <animate
                     attributeName="r"
                     values="1.8;3;1.8"
-                    dur="4s"
+                    dur="7s"
                     repeatCount="indefinite"
                     begin={breathOffset}
                   />
@@ -112,7 +112,7 @@ export default function ChakraLotus({ activeChakraId, size = 280 }) {
           <animate
             attributeName="r"
             values="2.5;3.5;2.5"
-            dur="6s"
+            dur="10s"
             repeatCount="indefinite"
           />
         </circle>

@@ -120,6 +120,27 @@ export default function RelationsPage() {
     }
   };
 
+  const handleSaveGroupReflection = ({ text, themes }) => {
+    if (!profile || !groupAnalysis) return;
+    const age = calculateAge(
+      profile.birthDate.year,
+      profile.birthDate.month,
+      profile.birthDate.day
+    );
+    const pos = getJourneyPosition(age);
+    const names = groupAnalysis.people.filter((p) => p.id !== 'self').map((p) => p.name);
+    addReflection({
+      text,
+      themes,
+      source: 'relations',
+      chakraId: pos.primary.id,
+      chakraName: pos.primary.name,
+      age,
+      spiral: pos.spiral,
+      sourceMeta: { groupNames: names, groupSize: groupAnalysis.people.length },
+    });
+  };
+
   const handleSaveReflection = ({ text, themes }) => {
     if (!profile || !selectedFriend) return;
     const age = calculateAge(
@@ -493,6 +514,21 @@ export default function RelationsPage() {
                       <p className={styles.seasonsNote}>{FIELD_SUMMARIES.journeyRange}</p>
                     </GlassCard>
                   )}
+
+                  {/* Reflection on the whole group */}
+                  <GlassCard className={styles.reflectionCard}>
+                    <span className={styles.reflectionLabel}>A thought about this field</span>
+                    <ReflectionInput
+                      placeholder={
+                        groupAnalysis.people.length > 2
+                          ? 'Something you notice about this constellation.'
+                          : 'Something you notice about being together.'
+                      }
+                      buttonLabel="Keep this"
+                      onSave={handleSaveGroupReflection}
+                      minHeight={100}
+                    />
+                  </GlassCard>
                 </>
               )}
             </>
