@@ -4,9 +4,13 @@ import { computeNatalChart } from '../engine/natal';
 import { computeTransits } from '../engine/transits';
 import { compareCharts, CHAKRA_RESONANCE } from '../engine/chakraResonance';
 import { loadFriends, addFriend, deleteFriend } from '../utils/friendStore';
+import { addReflection } from '../utils/reflectionStore';
+import { calculateAge } from '../utils/dateUtils';
+import { getJourneyPosition } from '../engine/chakraJourney';
 import TwoSkies from '../components/hero/TwoSkies';
 import GlassCard from '../components/common/GlassCard';
 import AspectRow from '../components/common/AspectRow';
+import ReflectionInput from '../components/common/ReflectionInput';
 import styles from './RelationsPage.module.css';
 
 export default function RelationsPage() {
@@ -65,6 +69,26 @@ export default function RelationsPage() {
     if (selectedId === id) {
       setSelectedId(next.length > 0 ? next[0].id : null);
     }
+  };
+
+  const handleSaveReflection = ({ text, themes }) => {
+    if (!profile || !selectedFriend) return;
+    const age = calculateAge(
+      profile.birthDate.year,
+      profile.birthDate.month,
+      profile.birthDate.day
+    );
+    const pos = getJourneyPosition(age);
+    addReflection({
+      text,
+      themes,
+      source: 'relations',
+      chakraId: pos.primary.id,
+      chakraName: pos.primary.name,
+      age,
+      spiral: pos.spiral,
+      sourceMeta: { friendName: selectedFriend.name, friendId: selectedFriend.id },
+    });
   };
 
   return (
@@ -235,6 +259,19 @@ export default function RelationsPage() {
                   </div>
                 </GlassCard>
               )}
+
+              {/* Reflection on this relationship */}
+              <GlassCard className={styles.reflectionCard}>
+                <span className={styles.reflectionLabel}>
+                  A thought about {selectedFriend.name}
+                </span>
+                <ReflectionInput
+                  placeholder={`Something you notice about being with ${selectedFriend.name}.`}
+                  buttonLabel="Keep this"
+                  onSave={handleSaveReflection}
+                  minHeight={100}
+                />
+              </GlassCard>
             </>
           )}
         </>

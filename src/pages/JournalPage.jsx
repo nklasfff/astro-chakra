@@ -1,8 +1,10 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useUser } from '../context/UserContext';
 import { loadReflections, addReflection, deleteReflection } from '../utils/reflectionStore';
+import { THEMES } from '../engine/themes';
 import ReflectingPool from '../components/hero/ReflectingPool';
 import GlassCard from '../components/common/GlassCard';
+import ReflectionInput from '../components/common/ReflectionInput';
 import styles from './JournalPage.module.css';
 
 // Chakra-aware prompts — each chakra has 3 prompts to rotate between.
@@ -13,12 +15,12 @@ const CHAKRA_PROMPTS = {
     'When did you last feel fully at home in your body?',
   ],
   sacral: [
-    'What does your body want today that you haven\'t given it?',
+    "What does your body want today that you haven't given it?",
     'What pleasure felt easy today — without guilt or earning?',
     'Where is the hesitation between impulse and action living?',
   ],
   solar: [
-    'What did you say yes to today that your body didn\'t agree to?',
+    "What did you say yes to today that your body didn't agree to?",
     'Where did you exercise clean will today — no force, no collapse?',
     'What would you do if you trusted your own power completely?',
   ],
@@ -46,7 +48,6 @@ const CHAKRA_PROMPTS = {
 
 function getDailyPrompt(chakraId, date) {
   const prompts = CHAKRA_PROMPTS[chakraId] || CHAKRA_PROMPTS.heart;
-  // Cycle prompts daily — stable for a given calendar day
   const dayNum = Math.floor(date.getTime() / (1000 * 60 * 60 * 24));
   return prompts[dayNum % prompts.length];
 }
@@ -55,32 +56,36 @@ export default function JournalPage() {
   const { getDerivedData } = useUser();
   const data = getDerivedData();
   const [entries, setEntries] = useState([]);
-  const [text, setText] = useState('');
 
   useEffect(() => {
-    setEntries(loadReflections());
+    setEntries(loadReflections().filter((e) => !e.source || e.source === 'journal'));
   }, []);
 
   const chakra = data?.phase?.chakra;
+  const age = data?.age;
+  const spiral = data?.phase?.spiral;
   const prompt = useMemo(
     () => (chakra ? getDailyPrompt(chakra.id, new Date()) : ''),
     [chakra]
   );
 
-  const handleSave = () => {
-    if (!text.trim()) return;
+  const handleSave = ({ text, themes }) => {
     const next = addReflection({
-      text: text.trim(),
+      text,
+      themes,
+      source: 'journal',
       chakraId: chakra?.id || null,
       chakraName: chakra?.name || null,
+      age: age || null,
+      spiral: spiral || null,
       prompt,
     });
-    setEntries(next);
-    setText('');
+    setEntries(next.filter((e) => !e.source || e.source === 'journal'));
   };
 
   const handleDelete = (id) => {
-    setEntries(deleteReflection(id));
+    const next = deleteReflection(id);
+    setEntries(next.filter((e) => !e.source || e.source === 'journal'));
   };
 
   if (!data) return null;
@@ -100,22 +105,12 @@ export default function JournalPage() {
         <p className={styles.prompt}>{prompt}</p>
       </GlassCard>
 
-      <div className={styles.writeArea}>
-        <textarea
-          className={styles.textarea}
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          placeholder="Begin here. A sentence, a phrase, a word."
-          rows="5"
-        />
-        <button
-          className={styles.saveBtn}
-          onClick={handleSave}
-          disabled={!text.trim()}
-        >
-          Keep this
-        </button>
-      </div>
+      <ReflectionInput
+        placeholder="Begin here. A sentence, a phrase, a word."
+        buttonLabel="Keep this"
+        onSave={handleSave}
+        minHeight={140}
+      />
 
       {entries.length > 0 && (
         <div className={styles.entries}>
@@ -143,6 +138,23 @@ export default function JournalPage() {
                 <p className={styles.entryPrompt}>{entry.prompt}</p>
               )}
               <p className={styles.entryText}>{entry.text}</p>
+              {entry.themes && entry.themes.length > 0 && (
+                <div className={styles.entryThemes}>
+                  {entry.themes.map((t) => {
+                    const theme = THEMES.find((x) => x.id === t);
+                    if (!theme) return null;
+                    return (
+                      <span
+                        key={t}
+                        className={styles.entryTheme}
+                        style={{ color: `var(--chakra-${theme.chakraId})` }}
+                      >
+                        {theme.label}
+                      </span>
+                    );
+                  })}
+                </div>
+              )}
               <button
                 className={styles.deleteBtn}
                 onClick={() => handleDelete(entry.id)}

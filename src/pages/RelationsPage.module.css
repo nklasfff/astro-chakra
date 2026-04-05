@@ -310,6 +310,21 @@
   flex-direction: column;
 }
 
+/* Reflection card */
+.reflectionCard {
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.reflectionLabel {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+}
+
 /* Add form */
 .addCard {
   padding: var(--space-lg);

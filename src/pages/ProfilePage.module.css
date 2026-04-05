@@ -74,6 +74,145 @@
   color: var(--text-muted);
 }
 
+/* Trace / constellation */
+.traceCard {
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.traceHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.traceCount {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.traceSummary {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--glass-border);
+}
+
+.traceLine {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+.traceHint {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.86rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  text-align: center;
+  padding: var(--space-sm) 0 0;
+}
+
+.starDetail {
+  padding: var(--space-md);
+  background: var(--glass-strong);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  animation: fadeDown 0.3s var(--ease-out) both;
+}
+
+.starDetailHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.starDate {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+}
+
+.starClose {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 4px;
+  opacity: 0.6;
+  transition: opacity var(--transition);
+}
+
+.starClose:hover {
+  opacity: 1;
+}
+
+.starMeta {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.starText {
+  font-family: var(--font-display);
+  font-size: 0.98rem;
+  color: var(--text-primary);
+  line-height: 1.65;
+  white-space: pre-wrap;
+}
+
+.starThemes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.starTheme {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.75rem;
+  padding: 2px 10px;
+  border-radius: var(--radius-full);
+  border: 1px solid currentColor;
+  opacity: 0.85;
+}
+
+.starDeleteBtn {
+  align-self: flex-end;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding: 4px 8px;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: all var(--transition);
+  margin-top: 4px;
+}
+
+.starDeleteBtn:hover {
+  opacity: 1;
+  color: var(--chakra-root);
+}
+
 .birthDate {
   font-family: var(--font-display);
   font-size: 1.25rem;

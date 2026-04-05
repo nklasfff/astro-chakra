@@ -1,14 +1,30 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
 import { computeNatalChart } from '../engine/natal';
+import { loadReflections, deleteReflection, getChakraCounts, getThemeCounts } from '../utils/reflectionStore';
+import { THEMES } from '../engine/themes';
+import { CHAKRAS } from '../engine/chakras';
 import CosmicDNA from '../components/hero/CosmicDNA';
+import Constellation from '../components/hero/Constellation';
 import GlassCard from '../components/common/GlassCard';
 import styles from './ProfilePage.module.css';
+
+const SOURCE_LABEL = {
+  journal: 'Journal',
+  practice: 'Practice',
+  relations: 'Relations',
+};
 
 export default function ProfilePage() {
   const { profile, getDerivedData, resetProfile, theme, toggleTheme } = useUser();
   const [confirmReset, setConfirmReset] = useState(false);
+  const [entries, setEntries] = useState([]);
+  const [selectedEntry, setSelectedEntry] = useState(null);
+
+  useEffect(() => {
+    setEntries(loadReflections());
+  }, []);
 
   const data = getDerivedData();
   const chart = useMemo(() => (profile ? computeNatalChart(profile) : null), [profile]);
@@ -40,6 +56,22 @@ export default function ProfilePage() {
     }
   };
 
+  const handleSelectStar = (entry) => setSelectedEntry(entry);
+  const handleDeleteSelected = () => {
+    if (!selectedEntry) return;
+    const next = deleteReflection(selectedEntry.id);
+    setEntries(next);
+    setSelectedEntry(null);
+  };
+
+  const chakraCounts = useMemo(() => getChakraCounts(), [entries]);
+  const themeCounts = useMemo(() => getThemeCounts(), [entries]);
+  const topChakra = useMemo(() => {
+    const sorted = Object.entries(chakraCounts).sort((a, b) => b[1] - a[1]);
+    return sorted[0] ? CHAKRAS.find((c) => c.id === sorted[0][0]) : null;
+  }, [chakraCounts]);
+  const topTheme = themeCounts[0] ? THEMES.find((t) => t.id === themeCounts[0].id) : null;
+
   return (
     <div className={styles.page}>
       <header className={styles.header}>
@@ -62,6 +94,99 @@ export default function ProfilePage() {
           Age {age}, spiral {spiral}. You are in year {age - ageRange.start + 1} of 7 in this chakra.
         </p>
         <p className={styles.cardMeta}>{chakra.sanskrit} · {chakra.theme}</p>
+      </GlassCard>
+
+      {/* Your trace — constellation of reflections */}
+      <GlassCard className={styles.traceCard}>
+        <div className={styles.traceHeader}>
+          <span className={styles.cardLabel}>Your trace</span>
+          <span className={styles.traceCount}>
+            {entries.length} {entries.length === 1 ? 'reflection' : 'reflections'}
+          </span>
+        </div>
+
+        <Constellation entries={entries} onSelect={handleSelectStar} />
+
+        {entries.length > 0 && (
+          <div className={styles.traceSummary}>
+            {topChakra && (
+              <p className={styles.traceLine}>
+                Most written from{' '}
+                <span style={{ color: topChakra.hex }}>{topChakra.name.toLowerCase()}</span>
+                {' · '}
+                {chakraCounts[topChakra.id]} {chakraCounts[topChakra.id] === 1 ? 'entry' : 'entries'}
+              </p>
+            )}
+            {topTheme && (
+              <p className={styles.traceLine}>
+                Recurring theme:{' '}
+                <span style={{ color: `var(--chakra-${topTheme.chakraId})` }}>{topTheme.label}</span>
+                {' · '}
+                {themeCounts[0].count} {themeCounts[0].count === 1 ? 'time' : 'times'}
+              </p>
+            )}
+          </div>
+        )}
+
+        {selectedEntry && (
+          <div className={styles.starDetail}>
+            <div className={styles.starDetailHeader}>
+              <span className={styles.starDate}>
+                {new Date(selectedEntry.createdAt).toLocaleDateString('en-US', {
+                  month: 'short',
+                  day: 'numeric',
+                  year: 'numeric',
+                })}
+              </span>
+              <button
+                className={styles.starClose}
+                onClick={() => setSelectedEntry(null)}
+                aria-label="Close"
+              >
+                ×
+              </button>
+            </div>
+            <div className={styles.starMeta}>
+              <span style={{ color: `var(--chakra-${selectedEntry.chakraId})` }}>
+                {selectedEntry.chakraName}
+              </span>
+              {selectedEntry.age != null && <span> · age {selectedEntry.age}</span>}
+              {selectedEntry.source && <span> · {SOURCE_LABEL[selectedEntry.source] || selectedEntry.source}</span>}
+              {selectedEntry.sourceMeta?.friendName && <span> · {selectedEntry.sourceMeta.friendName}</span>}
+              {selectedEntry.sourceMeta?.chakraReadingName && (
+                <span> · reading {selectedEntry.sourceMeta.chakraReadingName}</span>
+              )}
+            </div>
+            <p className={styles.starText}>{selectedEntry.text}</p>
+            {selectedEntry.themes && selectedEntry.themes.length > 0 && (
+              <div className={styles.starThemes}>
+                {selectedEntry.themes.map((t) => {
+                  const theme = THEMES.find((x) => x.id === t);
+                  if (!theme) return null;
+                  return (
+                    <span
+                      key={t}
+                      className={styles.starTheme}
+                      style={{ color: `var(--chakra-${theme.chakraId})` }}
+                    >
+                      {theme.label}
+                    </span>
+                  );
+                })}
+              </div>
+            )}
+            <button className={styles.starDeleteBtn} onClick={handleDeleteSelected}>
+              remove
+            </button>
+          </div>
+        )}
+
+        {entries.length === 0 && (
+          <p className={styles.traceHint}>
+            Write in Journal, Relations, or after reading a chakra — your stars
+            will appear here over time.
+          </p>
+        )}
       </GlassCard>
 
       <GlassCard className={styles.card}>

@@ -177,6 +177,23 @@
   white-space: pre-wrap;
 }
 
+.entryThemes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: var(--space-sm);
+}
+
+.entryTheme {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.78rem;
+  padding: 2px 10px;
+  border-radius: var(--radius-full);
+  border: 1px solid currentColor;
+  opacity: 0.85;
+}
+
 .deleteBtn {
   position: absolute;
   top: var(--space-sm);

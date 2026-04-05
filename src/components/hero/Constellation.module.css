@@ -1,0 +1,31 @@
+.wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: var(--space-sm) 0;
+}
+
+.svg {
+  width: 100%;
+  max-width: 480px;
+  height: auto;
+  display: block;
+}
+
+@keyframes starPulse {
+  0%, 100% { opacity: 0.85; }
+  50% { opacity: 1; }
+}
+
+.star {
+  animation: starPulse 5s ease-in-out infinite;
+  transition: transform var(--transition-fast);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.star:hover {
+  transform: scale(1.15);
+  transform-origin: center;
+  transform-box: fill-box;
+}

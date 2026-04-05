@@ -3,7 +3,10 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
 import { getChakra } from '../engine/chakras';
 import { getChakraDeep } from '../engine/chakraDeep';
+import { getJourneyPosition } from '../engine/chakraJourney';
+import { addReflection } from '../utils/reflectionStore';
 import GlassCard from '../components/common/GlassCard';
+import ReflectionInput from '../components/common/ReflectionInput';
 import styles from './ChakraDeepPage.module.css';
 
 function Expandable({ title, children, glowColor, defaultOpen = false }) {
@@ -169,6 +172,33 @@ export default function ChakraDeepPage() {
         <p className={styles.body}>{deep.astrology.planetBody}</p>
         <p className={styles.bodyAccent}>{deep.astrology.transitHint}</p>
       </Expandable>
+
+      {/* Reflection — what this chakra stirs in you today */}
+      <GlassCard className={styles.reflectionCard} glowColor={`${chakra.hex}15`}>
+        <span className={styles.reflectionLabel}>Reflect on {chakra.name.toLowerCase()}</span>
+        <p className={styles.reflectionHint}>
+          Something you noticed, a practice you tried, a question sitting with you.
+        </p>
+        <ReflectionInput
+          placeholder={`What is ${chakra.name.toLowerCase()} asking of you today?`}
+          buttonLabel="Keep this"
+          onSave={({ text, themes }) => {
+            if (!data) return;
+            const pos = getJourneyPosition(data.age);
+            addReflection({
+              text,
+              themes,
+              source: 'practice',
+              chakraId: pos.primary.id,
+              chakraName: pos.primary.name,
+              age: data.age,
+              spiral: pos.spiral,
+              sourceMeta: { chakraReading: chakra.id, chakraReadingName: chakra.name },
+            });
+          }}
+          minHeight={100}
+        />
+      </GlassCard>
 
       <button className={styles.topBtn} onClick={scrollToTop}>
         ↑ Back to top
