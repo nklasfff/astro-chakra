@@ -71,10 +71,10 @@
 }
 
 /* Expandable */
-.expandable { cursor: pointer; }
-.expandable:active { transform: scale(0.985); }
+.expandable { }
 
 .expandHeader {
+  cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;

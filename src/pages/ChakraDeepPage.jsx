@@ -8,13 +8,18 @@ import styles from './ChakraDeepPage.module.css';
 
 function Expandable({ title, children, glowColor, defaultOpen = false }) {
   const [open, setOpen] = useState(defaultOpen);
+  const toggle = (e) => { e.stopPropagation(); setOpen(!open); };
   return (
-    <GlassCard glowColor={glowColor} onClick={() => setOpen(!open)} className={styles.expandable}>
-      <div className={styles.expandHeader}>
+    <GlassCard glowColor={glowColor} className={styles.expandable}>
+      <div className={styles.expandHeader} onClick={toggle}>
         <h2 className={styles.sectionTitle}>{title}</h2>
         <span className={styles.expandIcon}>{open ? '−' : '+'}</span>
       </div>
-      {open && <div className={styles.expandContent}>{children}</div>}
+      {open && (
+        <div className={styles.expandContent} onClick={(e) => e.stopPropagation()}>
+          {children}
+        </div>
+      )}
     </GlassCard>
   );
 }

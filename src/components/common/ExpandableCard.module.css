@@ -1,11 +1,6 @@
 .card {
-  cursor: pointer;
-  transition: background var(--transition), transform var(--transition-fast);
+  transition: background var(--transition);
   -webkit-tap-highlight-color: transparent;
-}
-
-.card:active {
-  transform: scale(0.995);
 }
 
 .head {
@@ -13,6 +8,12 @@
   justify-content: space-between;
   align-items: flex-start;
   gap: var(--space-md);
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+}
+
+.head:active {
+  transform: scale(0.995);
 }
 
 .headText {
