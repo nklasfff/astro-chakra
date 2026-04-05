@@ -92,7 +92,7 @@ export default function JourneyTimeline({
           const cx = gridPadding + labelWidth + col * cellW + cellW / 2;
           const cy = gridPadding + row * cellW + cellW / 2;
 
-          const isSelected = selectedInSpiral && cell.age === selectedAge - (spiral - 1) * 49;
+          const isSelected = selectedInSpiral && cell.age === selectedAge;
           const isCurrent = currentInSpiral && cell.age === currentAge;
           const isPast = currentInSpiral && cell.age < currentAge;
           const isFuture = currentInSpiral && cell.age > currentAge;
@@ -101,7 +101,7 @@ export default function JourneyTimeline({
             <g
               key={idx}
               className={styles.cell}
-              onClick={() => onSelectAge && onSelectAge((spiral - 1) * 49 + cell.age)}
+              onClick={() => onSelectAge && onSelectAge(cell.age)}
               style={{ cursor: onSelectAge ? 'pointer' : 'default' }}
             >
               {/* Base watercolor wash — decade chakra */}
