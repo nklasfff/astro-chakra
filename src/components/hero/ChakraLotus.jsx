@@ -2,50 +2,31 @@ import { CHAKRAS } from '../../engine/chakras';
 import styles from './ChakraLotus.module.css';
 
 /**
- * Watercolor 7-petal mandala.
- * All motion handled by CSS keyframes (transform-origin based) — this
- * survives React remounts when navigating between routes. SMIL
- * animations can become paused or fail to restart, so we avoid them here.
+ * Living chakra mandala — the hero of Home.
+ * Seven watercolor petals continuously cycle through all chakra hues.
+ * The whole lotus slowly turns. Each petal breathes in scale.
+ * Colors drift in an endless chain so no two moments look alike.
  */
 export default function ChakraLotus({ activeChakraId, size = 280 }) {
   const cx = 150;
   const cy = 150;
   const petalCount = 7;
-  const distance = 64;
-  const cycleSeconds = 35;
+  const distance = 62;
+  const cycleSeconds = 42;
 
   return (
     <div className={styles.wrap} style={{ '--size': `${size}px` }}>
       <svg viewBox="0 0 300 300" className={styles.svg} aria-hidden="true">
         <defs>
-          <filter id="lotus-blur">
-            <feGaussianBlur stdDeviation="2.5" />
+          <filter id="lotus-soft-blur">
+            <feGaussianBlur stdDeviation="3" />
+          </filter>
+          <filter id="lotus-core-blur">
+            <feGaussianBlur stdDeviation="1.2" />
           </filter>
         </defs>
 
-        {/* Outer dashed rings — CSS rotation */}
-        <g className={styles.outerRings}>
-          <circle
-            cx={cx}
-            cy={cy}
-            r="122"
-            fill="none"
-            stroke="var(--line-faint)"
-            strokeWidth="0.6"
-            strokeDasharray="1 7"
-          />
-          <circle
-            cx={cx}
-            cy={cy}
-            r="96"
-            fill="none"
-            stroke="var(--line-faint)"
-            strokeWidth="0.5"
-            strokeDasharray="0.5 9"
-          />
-        </g>
-
-        {/* Lotus petal layer — counter-rotates via CSS */}
+        {/* Lotus rotates slowly as one — CSS transform on viewBox origin */}
         <g className={styles.lotusLayer}>
           {CHAKRAS.map((chakra, i) => {
             const rotation = i * (360 / petalCount);
@@ -55,25 +36,39 @@ export default function ChakraLotus({ activeChakraId, size = 280 }) {
               <g
                 key={chakra.id}
                 transform={`rotate(${rotation} ${cx} ${cy})`}
+                className={styles.petalGroup}
+                style={{ animationDelay: `${-i * 1.1}s` }}
               >
+                {/* Big soft watercolor bloom */}
                 <circle
                   cx={cx}
                   cy={cy - distance}
-                  r="48"
+                  r="52"
                   className={styles.petalBloom}
                   style={{
                     animationDelay,
                     '--cycle-duration': `${cycleSeconds}s`,
                   }}
-                  filter="url(#lotus-blur)"
+                  filter="url(#lotus-soft-blur)"
                 />
-                <ellipse
+                {/* Denser inner color */}
+                <circle
                   cx={cx}
                   cy={cy - distance}
-                  rx="26"
-                  ry="38"
-                  fill="none"
-                  className={`${styles.petalRing} ${isActive ? styles.petalRingActive : ''}`}
+                  r="22"
+                  className={`${styles.petalCore} ${isActive ? styles.petalCoreActive : ''}`}
+                  style={{
+                    animationDelay,
+                    '--cycle-duration': `${cycleSeconds}s`,
+                  }}
+                  filter="url(#lotus-core-blur)"
+                />
+                {/* Tiny bright dot at the petal's heart */}
+                <circle
+                  cx={cx}
+                  cy={cy - distance}
+                  r="2.2"
+                  className={styles.petalDot}
                   style={{
                     animationDelay,
                     '--cycle-duration': `${cycleSeconds}s`,
@@ -84,18 +79,15 @@ export default function ChakraLotus({ activeChakraId, size = 280 }) {
           })}
         </g>
 
-        {/* Center — the still point */}
-        <circle cx={cx} cy={cy} r="19" fill="var(--bg)" opacity="0.92" />
+        {/* Central still point — breathes gently */}
+        <circle cx={cx} cy={cy} r="20" fill="var(--bg)" opacity="0.75" />
         <circle
           cx={cx}
           cy={cy}
-          r="13"
-          fill="none"
-          stroke="var(--line-medium)"
-          strokeWidth="0.7"
-          className={styles.centerPulse}
+          r="3"
+          fill="var(--text-illustration-bright)"
+          className={styles.centerDot}
         />
-        <circle cx={cx} cy={cy} r="2.8" fill="var(--text-illustration-bright)" />
       </svg>
     </div>
   );

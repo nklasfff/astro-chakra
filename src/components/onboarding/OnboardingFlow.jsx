@@ -61,10 +61,10 @@ export default function OnboardingFlow() {
             <WelcomeIllustration className={styles.welcomeIllustration} />
             <h1 className={styles.title}>Astro Chakra</h1>
             <p className={styles.subtitle}>
-              Seven centers. Seven-year cycles. One life spiraling upward.
+              Seven centres. A life spiralling through them.
             </p>
             <p className={styles.body}>
-              Discover which chakra is active in your life phase — and how the planets shape the unique signature you were born with.
+              The chakras are not static — they form, modulate, and return across a lifetime. Meet the one that is shaping you now, and the natal sky you were born under.
             </p>
             <div className={styles.actions}>
               <button className={styles.btn} onClick={next}>Begin</button>
@@ -75,7 +75,7 @@ export default function OnboardingFlow() {
         {step === 'birthdate' && (
           <div className={animClass}>
             <h2 className={styles.title}>When were you born?</h2>
-            <p className={styles.subtitle}>Your birth date reveals your current chakra phase</p>
+            <p className={styles.subtitle}>Your birth date places you on the spiral — which chakra is shaping you now.</p>
             <div className={styles.dateInputs}>
               <div className={styles.field}>
                 <label>Year</label>
@@ -112,7 +112,7 @@ export default function OnboardingFlow() {
         {step === 'birthtime' && (
           <div className={animClass}>
             <h2 className={styles.title}>What time were you born?</h2>
-            <p className={styles.subtitle}>Birth time anchors your natal chart to the horizon</p>
+            <p className={styles.subtitle}>Time anchors the natal chart to the horizon you rose under.</p>
             <div className={styles.dateInputs} style={timeUnknown ? { opacity: 0.35, pointerEvents: 'none' } : {}}>
               <div className={styles.field}>
                 <label>Hour</label>
@@ -152,7 +152,7 @@ export default function OnboardingFlow() {
         {step === 'birthplace' && (
           <div className={animClass}>
             <h2 className={styles.title}>Where were you born?</h2>
-            <p className={styles.subtitle}>Place anchors the chart to the Earth</p>
+            <p className={styles.subtitle}>Place grounds the chart to the Earth beneath you.</p>
             <div className={styles.textInputs}>
               <div className={styles.field}>
                 <label>City</label>
@@ -193,8 +193,7 @@ export default function OnboardingFlow() {
               {chakra.sanskrit} — {chakra.theme}
             </p>
             <p className={styles.body}>
-              You are {age} years old, in spiral {spiral}, ages {ageRange.start}–{ageRange.end}.
-              This is your {chakra.name.toLowerCase()} chakra season.
+              You are {age}. This is your {chakra.name.toLowerCase()} chakra decade — ages {ageRange.start}–{ageRange.end} of spiral {spiral}. A centre is forming, modulating, asking something of you right now.
             </p>
             <div className={styles.summary}>
               <div className={styles.summaryItem}>

@@ -13,30 +13,19 @@
   display: block;
 }
 
-/* Rotation uses CSS transform on SVG <g> elements with transform-origin
-   set in viewBox coordinates. This works reliably across re-mounts. */
-@keyframes rotateCW {
+/* Whole lotus drifts slowly clockwise */
+@keyframes lotusRotate {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
 
-@keyframes rotateCCW {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(-360deg); }
-}
-
-.outerRings {
-  transform-origin: 150px 150px;
-  animation: rotateCW 260s linear infinite;
-}
-
 .lotusLayer {
   transform-origin: 150px 150px;
-  animation: rotateCCW 420s linear infinite;
+  animation: lotusRotate 320s linear infinite;
 }
 
 /* Continuous color cycle — drifts through all 7 chakra hues */
-@keyframes petalColorCycle {
+@keyframes bloomColorCycle {
   0%     { fill: #c26848; }
   14.28% { fill: #dd7c5c; }
   28.57% { fill: #d5a743; }
@@ -47,53 +36,41 @@
   100%   { fill: #c26848; }
 }
 
-@keyframes petalStrokeCycle {
-  0%     { stroke: #c26848; }
-  14.28% { stroke: #dd7c5c; }
-  28.57% { stroke: #d5a743; }
-  42.86% { stroke: #7ea158; }
-  57.14% { stroke: #628db2; }
-  71.43% { stroke: #6e6aa8; }
-  85.71% { stroke: #9f7bc0; }
-  100%   { stroke: #c26848; }
+@keyframes bloomOpacity {
+  0%, 100% { opacity: 0.42; }
+  50% { opacity: 0.68; }
 }
 
-@keyframes bloomBreath {
-  0%, 100% { opacity: 0.52; }
-  50% { opacity: 0.78; }
-}
-
-@keyframes bloomBreathActive {
-  0%, 100% { opacity: 0.7; }
+@keyframes coreOpacity {
+  0%, 100% { opacity: 0.68; }
   50% { opacity: 0.95; }
+}
+
+@keyframes dotOpacity {
+  0%, 100% { opacity: 0.85; }
+  50% { opacity: 1; }
 }
 
 .petalBloom {
   animation:
-    petalColorCycle var(--cycle-duration, 35s) linear infinite,
-    bloomBreath 6s ease-in-out infinite;
+    bloomColorCycle var(--cycle-duration, 42s) linear infinite,
+    bloomOpacity 6s ease-in-out infinite;
 }
 
-.petalRing {
-  stroke-width: 0.55;
-  opacity: 0.45;
+.petalCore {
   animation:
-    petalStrokeCycle var(--cycle-duration, 35s) linear infinite,
-    bloomBreath 6s ease-in-out infinite;
+    bloomColorCycle var(--cycle-duration, 42s) linear infinite,
+    coreOpacity 5s ease-in-out infinite;
 }
 
-.petalRingActive {
-  stroke-width: 1;
+.petalCoreActive {
   animation:
-    petalStrokeCycle var(--cycle-duration, 35s) linear infinite,
-    bloomBreathActive 4.5s ease-in-out infinite;
+    bloomColorCycle var(--cycle-duration, 42s) linear infinite,
+    coreOpacity 3.5s ease-in-out infinite;
 }
 
-@keyframes centerPulse {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 0.85; }
-}
-
-.centerPulse {
-  animation: centerPulse 7s ease-in-out infinite;
+.petalDot {
+  animation:
+    bloomColorCycle var(--cycle-duration, 42s) linear infinite,
+    dotOpacity 4s ease-in-out infinite;
 }
