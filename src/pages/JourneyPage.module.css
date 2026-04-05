@@ -1,0 +1,233 @@
+.page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: var(--space-xl) var(--space-lg) var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.header {
+  text-align: center;
+  padding-top: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--text-bright);
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.98rem;
+  color: var(--text-secondary);
+  max-width: 460px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Scrubber */
+.scrubber {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  margin-top: calc(-1 * var(--space-md));
+}
+
+.scrubBtn {
+  background: transparent;
+  border: 1px solid var(--border-light);
+  color: var(--text-secondary);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: all var(--transition);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.scrubBtn:hover {
+  color: var(--text-bright);
+  border-color: var(--text-secondary);
+}
+
+.scrubCenter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-width: 120px;
+}
+
+.scrubAge {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--text-bright);
+}
+
+.scrubReset {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-style: italic;
+  cursor: pointer;
+  padding: 2px 6px;
+  transition: color var(--transition);
+}
+
+.scrubReset:hover {
+  color: var(--text-secondary);
+}
+
+/* Position cards */
+.positionCard {
+  padding: var(--space-md) var(--space-lg);
+}
+
+.cardLabel {
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: var(--space-sm);
+}
+
+.positionRow {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+}
+
+.posDevanagari {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  font-weight: 300;
+  line-height: 1;
+  min-width: 50px;
+  text-align: center;
+  text-shadow: 0 0 20px currentColor;
+  flex-shrink: 0;
+}
+
+.posName {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 300;
+  line-height: 1.2;
+}
+
+.posMeta {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+.posBody {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  line-height: 1.65;
+  margin-top: 6px;
+}
+
+.spiralCard {
+  padding: var(--space-md) var(--space-lg);
+}
+
+.spiralBody {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  line-height: 1.65;
+}
+
+/* Deep sections */
+.sectionTitle {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 300;
+  color: var(--text-bright);
+  text-align: center;
+  margin-top: var(--space-md);
+}
+
+.bodyText {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  line-height: 1.75;
+  margin-bottom: var(--space-sm);
+}
+
+.bodyText:last-child {
+  margin-bottom: 0;
+}
+
+.stateLabel {
+  color: var(--text-secondary);
+  font-weight: 500;
+  font-style: italic;
+}
+
+.signList {
+  list-style: none;
+  margin-top: var(--space-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.signItem {
+  font-size: 0.86rem;
+  color: var(--text-primary);
+  line-height: 1.7;
+}
+
+.prompts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.prompt {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  padding-left: var(--space-md);
+  border-left: 1px solid var(--glass-border);
+  line-height: 1.7;
+}
+
+.comingSoon {
+  text-align: center;
+  color: var(--text-muted);
+  font-style: italic;
+  padding: var(--space-xl) 0;
+}

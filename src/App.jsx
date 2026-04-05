@@ -12,6 +12,8 @@ import TimePage from './pages/TimePage';
 import ProfilePage from './pages/ProfilePage';
 import JournalPage from './pages/JournalPage';
 import RelationsPage from './pages/RelationsPage';
+import JourneyPage from './pages/JourneyPage';
+import MovementPage from './pages/MovementPage';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -34,6 +36,9 @@ function AppRoutes() {
         <Route path="/explore/chakras/:chakraId" element={<ChakraDeepPage />} />
         <Route path="/explore/natal" element={<NatalChartPage />} />
         <Route path="/explore/journal" element={<JournalPage />} />
+        <Route path="/journey" element={<JourneyPage />} />
+        <Route path="/movement" element={<MovementPage />} />
+        {/* Legacy routes still resolve for deep links */}
         <Route path="/relations" element={<RelationsPage />} />
         <Route path="/time" element={<TimePage />} />
         <Route path="/profile" element={<ProfilePage />} />

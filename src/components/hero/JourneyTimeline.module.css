@@ -1,0 +1,31 @@
+.wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: var(--space-md) 0;
+}
+
+.svg {
+  width: var(--size, 320px);
+  height: var(--size, 320px);
+  max-width: 100%;
+  display: block;
+}
+
+.cell {
+  transition: opacity var(--transition-fast);
+}
+
+.cell:hover rect:first-of-type {
+  opacity: 0.85;
+}
+
+@keyframes currentCellPulse {
+  0%, 100% { opacity: 0.85; stroke-width: 1.8; }
+  50% { opacity: 1; stroke-width: 2.4; }
+}
+
+.currentPulse {
+  animation: currentCellPulse 3s ease-in-out infinite;
+}

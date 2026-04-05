@@ -7,8 +7,8 @@ import styles from './BottomNav.module.css';
 const tabs = [
   { path: '/home', label: 'Home', icon: HomeIcon },
   { path: '/explore', label: 'Explore', icon: ExploreIcon },
-  { path: '/relations', label: 'Relations', icon: RelationsIcon },
-  { path: '/time', label: 'Time', icon: TimeIcon },
+  { path: '/journey', label: 'Journey', icon: JourneyIcon },
+  { path: '/movement', label: 'Movement', icon: MovementIcon },
   { path: '/profile', label: 'Profile', icon: ProfileIcon },
 ];
 
@@ -66,20 +66,22 @@ function ExploreIcon() {
   );
 }
 
-function RelationsIcon() {
+function JourneyIcon() {
+  /* Spiral — the journey through the centres */
   return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-      <circle cx="8" cy="12" r="4" />
-      <circle cx="16" cy="12" r="4" />
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+      <path d="M12 12 m 0 -8 a 8 8 0 1 1 -0.1 0 a 6 6 0 1 0 0.1 0 a 4 4 0 1 1 -0.1 0 a 2 2 0 1 0 0.1 0" />
     </svg>
   );
 }
 
-function TimeIcon() {
+function MovementIcon() {
+  /* Orbit — sky in motion */
   return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
       <circle cx="12" cy="12" r="9" />
-      <polyline points="12,7 12,12 16,14" />
+      <circle cx="12" cy="3" r="1.3" fill="currentColor" />
+      <circle cx="18" cy="17" r="1.3" fill="currentColor" />
     </svg>
   );
 }
