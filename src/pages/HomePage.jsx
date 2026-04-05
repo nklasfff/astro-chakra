@@ -120,7 +120,7 @@ export default function HomePage() {
         </GlassCard>
       )}
 
-      <SpiralIllustration color="var(--text-illustration)" size={140} />
+      <SpiralIllustration size={200} />
 
       {deep && (
         <GlassCard className={styles.reflectionCard}>
