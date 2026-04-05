@@ -4,8 +4,8 @@ import styles from './ChakraLotus.module.css';
 /**
  * Living chakra mandala — the hero of Home.
  * Seven watercolor petals continuously cycle through all chakra hues.
- * The whole lotus slowly turns. Each petal breathes in scale.
- * Colors drift in an endless chain so no two moments look alike.
+ * Each petal's bloom radius expands and contracts (true breathing, via SMIL).
+ * The whole lotus slowly turns.
  */
 export default function ChakraLotus({ activeChakraId, size = 280 }) {
   const cx = 150;
@@ -26,43 +26,56 @@ export default function ChakraLotus({ activeChakraId, size = 280 }) {
           </filter>
         </defs>
 
-        {/* Lotus rotates slowly as one — CSS transform on viewBox origin */}
+        {/* Lotus rotates slowly as one */}
         <g className={styles.lotusLayer}>
           {CHAKRAS.map((chakra, i) => {
             const rotation = i * (360 / petalCount);
             const isActive = chakra.id === activeChakraId;
             const animationDelay = `${-i * (cycleSeconds / petalCount)}s`;
+            // Each petal's breath is offset by a fraction of its cycle
+            const breathOffset = `${-i * 0.85}s`;
             return (
-              <g
-                key={chakra.id}
-                transform={`rotate(${rotation} ${cx} ${cy})`}
-                className={styles.petalGroup}
-                style={{ animationDelay: `${-i * 1.1}s` }}
-              >
-                {/* Big soft watercolor bloom */}
+              <g key={chakra.id} transform={`rotate(${rotation} ${cx} ${cy})`}>
+                {/* Big soft watercolor bloom — SMIL animates radius */}
                 <circle
                   cx={cx}
                   cy={cy - distance}
-                  r="52"
+                  r="48"
                   className={styles.petalBloom}
                   style={{
                     animationDelay,
                     '--cycle-duration': `${cycleSeconds}s`,
                   }}
                   filter="url(#lotus-soft-blur)"
-                />
+                >
+                  <animate
+                    attributeName="r"
+                    values="44;58;44"
+                    dur="6s"
+                    repeatCount="indefinite"
+                    begin={breathOffset}
+                  />
+                </circle>
                 {/* Denser inner color */}
                 <circle
                   cx={cx}
                   cy={cy - distance}
-                  r="22"
+                  r="20"
                   className={`${styles.petalCore} ${isActive ? styles.petalCoreActive : ''}`}
                   style={{
                     animationDelay,
                     '--cycle-duration': `${cycleSeconds}s`,
                   }}
                   filter="url(#lotus-core-blur)"
-                />
+                >
+                  <animate
+                    attributeName="r"
+                    values="18;26;18"
+                    dur="5s"
+                    repeatCount="indefinite"
+                    begin={breathOffset}
+                  />
+                </circle>
                 {/* Tiny bright dot at the petal's heart */}
                 <circle
                   cx={cx}
@@ -73,7 +86,15 @@ export default function ChakraLotus({ activeChakraId, size = 280 }) {
                     animationDelay,
                     '--cycle-duration': `${cycleSeconds}s`,
                   }}
-                />
+                >
+                  <animate
+                    attributeName="r"
+                    values="1.8;3;1.8"
+                    dur="4s"
+                    repeatCount="indefinite"
+                    begin={breathOffset}
+                  />
+                </circle>
               </g>
             );
           })}
@@ -87,7 +108,14 @@ export default function ChakraLotus({ activeChakraId, size = 280 }) {
           r="3"
           fill="var(--text-illustration-bright)"
           className={styles.centerDot}
-        />
+        >
+          <animate
+            attributeName="r"
+            values="2.5;3.5;2.5"
+            dur="6s"
+            repeatCount="indefinite"
+          />
+        </circle>
       </svg>
     </div>
   );
