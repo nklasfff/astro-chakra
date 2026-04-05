@@ -310,6 +310,306 @@
   flex-direction: column;
 }
 
+/* View toggle */
+.viewToggle {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+}
+
+.viewBtn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 6px 16px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-display);
+  font-size: 0.86rem;
+  letter-spacing: 0.02em;
+  transition: all var(--transition);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.viewBtn:hover {
+  color: var(--text-secondary);
+  border-color: var(--border-light);
+}
+
+.viewBtnActive {
+  color: var(--text-bright);
+  border-color: var(--text-secondary);
+  background: var(--glass-strong);
+}
+
+/* Person selector */
+.selectorCard {
+  padding: var(--space-md) var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.selectorList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+}
+
+.selectorItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.selectorItem input {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  padding: 0;
+  margin: 0;
+  border: 1px solid var(--border-light);
+  border-radius: 3px;
+  background: var(--surface);
+  cursor: pointer;
+  position: relative;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.selectorItem input:checked {
+  background: var(--text-secondary);
+  border-color: var(--text-secondary);
+}
+
+.selectorItem input:checked::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 5px;
+  height: 9px;
+  border: solid var(--bg);
+  border-width: 0 1.5px 1.5px 0;
+  transform: rotate(45deg);
+}
+
+.groupHint {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  text-align: center;
+  padding: var(--space-md);
+}
+
+/* Composition chips */
+.chipsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.chip {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.85rem;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  border: 1px solid currentColor;
+  opacity: 0.9;
+}
+
+.chipAbsent {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.8rem;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  border: 1px dashed currentColor;
+  opacity: 0.55;
+}
+
+.absentLabel {
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+  margin-top: var(--space-sm);
+  display: block;
+}
+
+.absentNote {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  margin-top: var(--space-sm);
+}
+
+.dominantPlanet {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: var(--space-xs);
+}
+
+/* Pair counts */
+.pairCounts {
+  display: flex;
+  gap: var(--space-lg);
+  margin-top: 6px;
+}
+
+.pairCount {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.pairCountNum {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 300;
+  color: var(--text-bright);
+  line-height: 1;
+}
+
+.pairCountLabel {
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+}
+
+/* Pair rows */
+.pairRow {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--glass-border);
+  transition: background var(--transition-fast);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pairRow:last-child {
+  border-bottom: none;
+}
+
+.pairHead {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.pairNames {
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  flex: 1;
+}
+
+.pairType {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.84rem;
+}
+
+.pairChevron {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  opacity: 0.5;
+  width: 20px;
+  text-align: center;
+}
+
+.pairBody {
+  padding-top: var(--space-sm);
+  margin-top: var(--space-sm);
+  border-top: 1px solid var(--glass-border);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  animation: fadeDown 0.3s var(--ease-out) both;
+}
+
+.pairBodyText {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  line-height: 1.65;
+}
+
+.pairBodyAccent {
+  font-size: 0.84rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+.pairBodyLabel {
+  color: var(--text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+}
+
+/* Seasons */
+.seasons {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.seasonRow {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+  padding: 4px 0;
+}
+
+.seasonDevanagari {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  line-height: 1;
+  min-width: 20px;
+  text-align: center;
+  filter: drop-shadow(0 0 2px currentColor);
+}
+
+.seasonName {
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  color: var(--text-primary);
+  min-width: 70px;
+}
+
+.seasonMeta {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.84rem;
+  color: var(--text-muted);
+}
+
+.seasonsNote {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  margin-top: var(--space-sm);
+}
+
 /* Reflection card */
 .reflectionCard {
   padding: var(--space-lg);

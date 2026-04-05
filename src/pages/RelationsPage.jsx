@@ -7,7 +7,9 @@ import { loadFriends, addFriend, deleteFriend } from '../utils/friendStore';
 import { addReflection } from '../utils/reflectionStore';
 import { calculateAge } from '../utils/dateUtils';
 import { getJourneyPosition } from '../engine/chakraJourney';
+import { analyzeGroup, buildGroupPerson, PAIR_DESCRIPTIONS, FIELD_SUMMARIES } from '../engine/groupConstellation';
 import TwoSkies from '../components/hero/TwoSkies';
+import GroupConstellation from '../components/hero/GroupConstellation';
 import GlassCard from '../components/common/GlassCard';
 import AspectRow from '../components/common/AspectRow';
 import ReflectionInput from '../components/common/ReflectionInput';
@@ -19,12 +21,25 @@ export default function RelationsPage() {
   const [showAdd, setShowAdd] = useState(false);
   const [form, setForm] = useState({ name: '', year: 1990, month: 1, day: 1, hour: 12, minute: 0 });
   const [selectedId, setSelectedId] = useState(null);
+  const [view, setView] = useState('pair'); // 'pair' | 'group'
+  const [includedIds, setIncludedIds] = useState(new Set(['self']));
 
   useEffect(() => {
     const loaded = loadFriends();
     setFriends(loaded);
     if (loaded.length > 0 && !selectedId) setSelectedId(loaded[0].id);
+    // Default group: self + all friends
+    setIncludedIds(new Set(['self', ...loaded.map((f) => f.id)]));
   }, []);
+
+  const toggleIncluded = (id) => {
+    setIncludedIds((current) => {
+      const next = new Set(current);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
 
   const myChart = useMemo(() => (profile ? computeNatalChart(profile) : null), [profile]);
 
@@ -49,6 +64,40 @@ export default function RelationsPage() {
     if (!myChart || !theirChart) return null;
     return compareCharts(myChart, theirChart);
   }, [myChart, theirChart]);
+
+  // Build group-analysis from profile + friends
+  const groupAnalysis = useMemo(() => {
+    if (!profile || !myChart) return null;
+    const candidates = [];
+    // Self
+    if (includedIds.has('self')) {
+      const myAge = calculateAge(
+        profile.birthDate.year,
+        profile.birthDate.month,
+        profile.birthDate.day
+      );
+      const myJourney = { ...getJourneyPosition(myAge), age: myAge };
+      candidates.push(
+        buildGroupPerson({ id: 'self', name: 'You', chart: myChart, journey: myJourney })
+      );
+    }
+    // Friends
+    for (const f of friends) {
+      if (!includedIds.has(f.id)) continue;
+      const fChart = computeNatalChart({ birthDate: f.birthDate, birthTime: f.birthTime });
+      const fAge = calculateAge(
+        f.birthDate.year,
+        f.birthDate.month,
+        f.birthDate.day
+      );
+      const fJourney = { ...getJourneyPosition(fAge), age: fAge };
+      candidates.push(
+        buildGroupPerson({ id: f.id, name: f.name, chart: fChart, journey: fJourney })
+      );
+    }
+    if (candidates.length < 2) return null;
+    return analyzeGroup(candidates);
+  }, [profile, myChart, friends, includedIds]);
 
   const handleAdd = () => {
     if (!form.name.trim()) return;
@@ -120,6 +169,25 @@ export default function RelationsPage() {
 
       {friends.length > 0 && !showAdd && (
         <>
+          {/* View toggle — pair (1-1) vs group (2+) */}
+          {friends.length >= 2 && (
+            <div className={styles.viewToggle}>
+              <button
+                className={`${styles.viewBtn} ${view === 'pair' ? styles.viewBtnActive : ''}`}
+                onClick={() => setView('pair')}
+              >
+                Pair
+              </button>
+              <button
+                className={`${styles.viewBtn} ${view === 'group' ? styles.viewBtnActive : ''}`}
+                onClick={() => setView('group')}
+              >
+                Group field
+              </button>
+            </div>
+          )}
+
+          {view === 'pair' && (
           <div className={styles.friendTabs}>
             {friends.map((f) => (
               <button
@@ -134,8 +202,9 @@ export default function RelationsPage() {
               + add
             </button>
           </div>
+          )}
 
-          {selectedFriend && theirChart && myChart && (
+          {view === 'pair' && selectedFriend && theirChart && myChart && (
             <>
               {/* Signature pair card */}
               <GlassCard className={styles.signatureCard}>
@@ -274,6 +343,160 @@ export default function RelationsPage() {
               </GlassCard>
             </>
           )}
+
+          {view === 'group' && (
+            <>
+              {/* Who to include */}
+              <GlassCard className={styles.selectorCard}>
+                <span className={styles.resonanceLabel}>Select who to include</span>
+                <div className={styles.selectorList}>
+                  <label className={styles.selectorItem}>
+                    <input
+                      type="checkbox"
+                      checked={includedIds.has('self')}
+                      onChange={() => toggleIncluded('self')}
+                    />
+                    <span>You</span>
+                  </label>
+                  {friends.map((f) => (
+                    <label key={f.id} className={styles.selectorItem}>
+                      <input
+                        type="checkbox"
+                        checked={includedIds.has(f.id)}
+                        onChange={() => toggleIncluded(f.id)}
+                      />
+                      <span>{f.name}</span>
+                    </label>
+                  ))}
+                </div>
+              </GlassCard>
+
+              {!groupAnalysis && (
+                <p className={styles.groupHint}>
+                  Select at least two people to see the field between you.
+                </p>
+              )}
+
+              {groupAnalysis && (
+                <>
+                  {/* Constellation illustration */}
+                  <GroupConstellation
+                    people={groupAnalysis.people}
+                    pairs={groupAnalysis.pairs}
+                    size={320}
+                  />
+
+                  {/* Composition: present + absent */}
+                  <GlassCard className={styles.resonanceCard}>
+                    <span className={styles.resonanceLabel}>Chakra composition</span>
+                    <div className={styles.chipsRow}>
+                      {groupAnalysis.present.map((c) => (
+                        <span
+                          key={c.id}
+                          className={styles.chip}
+                          style={{ color: c.hex, borderColor: c.hex }}
+                        >
+                          {c.devanagari.charAt(0)} {c.name}
+                        </span>
+                      ))}
+                    </div>
+                    {groupAnalysis.absent.length > 0 && (
+                      <>
+                        <span className={styles.absentLabel}>absent</span>
+                        <div className={styles.chipsRow}>
+                          {groupAnalysis.absent.map((c) => (
+                            <span
+                              key={c.id}
+                              className={styles.chipAbsent}
+                              style={{ color: c.hex }}
+                            >
+                              {c.name}
+                            </span>
+                          ))}
+                        </div>
+                        <p className={styles.absentNote}>{FIELD_SUMMARIES.absence}</p>
+                      </>
+                    )}
+                  </GlassCard>
+
+                  {/* Dominant chakra */}
+                  {groupAnalysis.dominantChakra && (
+                    <GlassCard
+                      className={styles.resonanceCard}
+                      glowColor={`${groupAnalysis.dominantChakra.hex}25`}
+                    >
+                      <span className={styles.resonanceLabel}>Dominant in the field</span>
+                      <h3
+                        className={styles.resonanceName}
+                        style={{ color: groupAnalysis.dominantChakra.hex }}
+                      >
+                        {groupAnalysis.dominantChakra.devanagari} {groupAnalysis.dominantChakra.name}
+                      </h3>
+                      <p className={styles.resonanceBody}>{FIELD_SUMMARIES.presence}</p>
+                      {groupAnalysis.dominantPlanet && (
+                        <p className={styles.dominantPlanet}>
+                          Ruled by {groupAnalysis.dominantPlanet.name} —{' '}
+                          {groupAnalysis.dominantPlanet.domain.toLowerCase()}
+                        </p>
+                      )}
+                    </GlassCard>
+                  )}
+
+                  {/* Pair counts */}
+                  <GlassCard className={styles.resonanceCard}>
+                    <span className={styles.resonanceLabel}>The pattern</span>
+                    <div className={styles.pairCounts}>
+                      {['resonance', 'flow', 'bridge', 'contrast'].map((t) => (
+                        groupAnalysis.typeCounts[t] > 0 && (
+                          <div key={t} className={styles.pairCount}>
+                            <span className={styles.pairCountNum}>{groupAnalysis.typeCounts[t]}</span>
+                            <span className={styles.pairCountLabel}>{t}</span>
+                          </div>
+                        )
+                      ))}
+                    </div>
+                  </GlassCard>
+
+                  {/* Pairwise dynamics */}
+                  <GlassCard className={styles.aspectsCard}>
+                    <div className={styles.aspectsHeader}>
+                      <span className={styles.aspectsLabel}>Every connection</span>
+                      <span className={styles.aspectsHint}>Tap to read</span>
+                    </div>
+                    <div className={styles.aspects}>
+                      {groupAnalysis.pairs.map((pair, i) => (
+                        <PairRow key={i} pair={pair} />
+                      ))}
+                    </div>
+                  </GlassCard>
+
+                  {/* Journey span */}
+                  {groupAnalysis.journeySpan.minAge != null && (
+                    <GlassCard className={styles.resonanceCard}>
+                      <span className={styles.resonanceLabel}>Life seasons</span>
+                      <div className={styles.seasons}>
+                        {groupAnalysis.people.map((p) => (
+                          <div key={p.id} className={styles.seasonRow}>
+                            <span
+                              className={styles.seasonDevanagari}
+                              style={{ color: p.chakraHex }}
+                            >
+                              {p.chakraDevanagari?.charAt(0)}
+                            </span>
+                            <span className={styles.seasonName}>{p.name}</span>
+                            <span className={styles.seasonMeta}>
+                              age {p.age} · {p.chakraName.toLowerCase()}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                      <p className={styles.seasonsNote}>{FIELD_SUMMARIES.journeyRange}</p>
+                    </GlassCard>
+                  )}
+                </>
+              )}
+            </>
+          )}
         </>
       )}
 
@@ -334,6 +557,57 @@ export default function RelationsPage() {
             </button>
           </div>
         </GlassCard>
+      )}
+    </div>
+  );
+}
+
+function PairRow({ pair }) {
+  const [open, setOpen] = useState(false);
+  const desc = PAIR_DESCRIPTIONS[pair.type] || {};
+  const TYPE_COLOR = {
+    resonance: 'var(--text-secondary)',
+    flow: 'var(--chakra-heart)',
+    bridge: 'var(--chakra-throat)',
+    contrast: 'var(--chakra-root)',
+  };
+  return (
+    <div
+      className={styles.pairRow}
+      onClick={() => setOpen(!open)}
+      style={{ cursor: 'pointer' }}
+    >
+      <div className={styles.pairHead}>
+        <span className={styles.pairNames}>
+          <span style={{ color: pair.a.chakraHex }}>{pair.a.name}</span>
+          {' · '}
+          <span style={{ color: pair.b.chakraHex }}>{pair.b.name}</span>
+        </span>
+        <span
+          className={styles.pairType}
+          style={{ color: TYPE_COLOR[pair.type] }}
+        >
+          {pair.typeMeta.label}
+        </span>
+        <span className={styles.pairChevron}>{open ? '−' : '+'}</span>
+      </div>
+      {open && (
+        <div
+          className={styles.pairBody}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <p className={styles.pairBodyText}>{desc.body}</p>
+          {desc.gift && (
+            <p className={styles.pairBodyAccent}>
+              <strong className={styles.pairBodyLabel}>Gift.</strong> {desc.gift}
+            </p>
+          )}
+          {desc.shadow && (
+            <p className={styles.pairBodyAccent}>
+              <strong className={styles.pairBodyLabel}>Shadow.</strong> {desc.shadow}
+            </p>
+          )}
+        </div>
       )}
     </div>
   );
