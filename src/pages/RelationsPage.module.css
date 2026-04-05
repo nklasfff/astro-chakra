@@ -310,6 +310,13 @@
   flex-direction: column;
 }
 
+/* Share row */
+.shareRow {
+  display: flex;
+  justify-content: center;
+  margin-top: calc(-1 * var(--space-sm));
+}
+
 /* View toggle */
 .viewToggle {
   display: flex;

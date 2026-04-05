@@ -13,6 +13,7 @@ import GroupConstellation from '../components/hero/GroupConstellation';
 import GlassCard from '../components/common/GlassCard';
 import AspectRow from '../components/common/AspectRow';
 import ReflectionInput from '../components/common/ReflectionInput';
+import ShareActions from '../components/common/ShareActions';
 import styles from './RelationsPage.module.css';
 
 export default function RelationsPage() {
@@ -119,6 +120,51 @@ export default function RelationsPage() {
       setSelectedId(next.length > 0 ? next[0].id : null);
     }
   };
+
+  // Snapshot save — pair
+  const savePairSnapshot = () => {
+    if (!profile || !myChart || !theirChart || !selectedFriend) return;
+    const age = calculateAge(profile.birthDate.year, profile.birthDate.month, profile.birthDate.day);
+    const pos = getJourneyPosition(age);
+    const text = `You (${myChart.sun.sign.name} sun) & ${selectedFriend.name} (${theirChart.sun.sign.name} sun) — chakra resonance noted.`;
+    addReflection({
+      text,
+      themes: [],
+      source: 'relations',
+      chakraId: pos.primary.id,
+      chakraName: pos.primary.name,
+      age,
+      spiral: pos.spiral,
+      sourceMeta: { friendName: selectedFriend.name, friendId: selectedFriend.id, snapshot: true },
+    });
+  };
+
+  const pairShareText = selectedFriend && myChart && theirChart
+    ? `${myChart.sun.sign.glyph} ${myChart.sun.sign.name} sun meets ${theirChart.sun.sign.glyph} ${theirChart.sun.sign.name} sun — you and ${selectedFriend.name}.`
+    : '';
+
+  // Snapshot save — group
+  const saveGroupSnapshot = () => {
+    if (!profile || !groupAnalysis) return;
+    const age = calculateAge(profile.birthDate.year, profile.birthDate.month, profile.birthDate.day);
+    const pos = getJourneyPosition(age);
+    const names = groupAnalysis.people.map((p) => p.name).join(', ');
+    const text = `Field of ${groupAnalysis.people.length}: ${names}. Dominant: ${groupAnalysis.dominantChakra?.name || '—'}.`;
+    addReflection({
+      text,
+      themes: [],
+      source: 'relations',
+      chakraId: pos.primary.id,
+      chakraName: pos.primary.name,
+      age,
+      spiral: pos.spiral,
+      sourceMeta: { groupNames: groupAnalysis.people.map((p) => p.name), groupSize: groupAnalysis.people.length, snapshot: true },
+    });
+  };
+
+  const groupShareText = groupAnalysis
+    ? `${groupAnalysis.people.length} skies meeting — ${groupAnalysis.people.map((p) => p.name).join(', ')}. Dominant in the field: ${groupAnalysis.dominantChakra?.name || '—'}.`
+    : '';
 
   const handleSaveGroupReflection = ({ text, themes }) => {
     if (!profile || !groupAnalysis) return;
@@ -276,6 +322,10 @@ export default function RelationsPage() {
                 </button>
               </GlassCard>
 
+              <div className={styles.shareRow}>
+                <ShareActions onSave={savePairSnapshot} shareText={pairShareText} />
+              </div>
+
               {/* Chakra resonance */}
               {comparison && comparison.shared.length > 0 && (
                 <GlassCard className={styles.resonanceCard}>
@@ -406,6 +456,10 @@ export default function RelationsPage() {
                     pairs={groupAnalysis.pairs}
                     size={320}
                   />
+
+                  <div className={styles.shareRow}>
+                    <ShareActions onSave={saveGroupSnapshot} shareText={groupShareText} />
+                  </div>
 
                   {/* Composition: present + absent */}
                   <GlassCard className={styles.resonanceCard}>

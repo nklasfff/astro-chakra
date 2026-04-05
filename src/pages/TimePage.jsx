@@ -1,8 +1,13 @@
 import { useState, useMemo } from 'react';
 import { computeCurrentSky, getMoonPhase } from '../engine/transits';
 import { formatDegree } from '../engine/zodiac';
+import { useUser } from '../context/UserContext';
+import { calculateAge } from '../utils/dateUtils';
+import { getJourneyPosition } from '../engine/chakraJourney';
+import { addReflection } from '../utils/reflectionStore';
 import GlassCard from '../components/common/GlassCard';
 import PlanetRow from '../components/common/PlanetRow';
+import ShareActions from '../components/common/ShareActions';
 import MoonPhase from '../components/hero/MoonPhase';
 import NatalChart from '../components/hero/NatalChart';
 import styles from './TimePage.module.css';
@@ -16,6 +21,7 @@ function localDateString(d = new Date()) {
 
 export default function TimePage() {
   const [date, setDate] = useState(() => localDateString());
+  const { profile } = useUser();
 
   const dateObj = useMemo(() => {
     // Parse YYYY-MM-DD as noon UTC to avoid timezone edge cases
@@ -34,6 +40,31 @@ export default function TimePage() {
   });
 
   const isToday = date === localDateString();
+
+  // Short share summary + save snapshot
+  const shareText = `The sky on ${dateLabel}: ${sky.sun.sign.glyph} Sun in ${sky.sun.sign.name}, ${sky.moon.sign.glyph} Moon in ${sky.moon.sign.name} (${moonPhase.name}).`;
+
+  const handleSaveSnapshot = () => {
+    const text = shareText;
+    let chakraId = null, chakraName = null, age = null, spiral = null;
+    if (profile?.birthDate) {
+      age = calculateAge(profile.birthDate.year, profile.birthDate.month, profile.birthDate.day);
+      const pos = getJourneyPosition(age);
+      chakraId = pos.primary.id;
+      chakraName = pos.primary.name;
+      spiral = pos.spiral;
+    }
+    addReflection({
+      text,
+      themes: [],
+      source: 'time',
+      chakraId,
+      chakraName,
+      age,
+      spiral,
+      sourceMeta: { date, dateLabel, sunSign: sky.sun.sign.name, moonSign: sky.moon.sign.name, moonPhase: moonPhase.name },
+    });
+  };
 
   return (
     <div className={styles.page}>
@@ -64,6 +95,13 @@ export default function TimePage() {
       </div>
 
       <p className={styles.dateDisplay}>{dateLabel}</p>
+
+      <div className={styles.actions}>
+        <ShareActions
+          onSave={handleSaveSnapshot}
+          shareText={shareText}
+        />
+      </div>
 
       <NatalChart chart={sky} size={360} />
 
