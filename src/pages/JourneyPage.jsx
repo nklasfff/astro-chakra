@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react';
 import { useUser } from '../context/UserContext';
 import { getJourneyPosition, getSpiralLabel, getSpiralMeaning } from '../engine/chakraJourney';
 import { getChakraStates, hasChakraStates } from '../engine/chakraStates';
-import JourneyTimeline from '../components/hero/JourneyTimeline';
+import LifeSpiral from '../components/hero/LifeSpiral';
 import GlassCard from '../components/common/GlassCard';
 import ExpandableCard from '../components/common/ExpandableCard';
 import styles from './JourneyPage.module.css';
@@ -24,8 +24,13 @@ export default function JourneyPage() {
   const primaryStates = hasChakraStates(primary.id) ? getChakraStates(primary.id) : null;
   const subStates = hasChakraStates(sub.id) ? getChakraStates(sub.id) : null;
 
-  const activeSpiral = Math.floor(selectedAge / 49) + 1;
   const isViewingCurrent = selectedAge === currentAge;
+  // Show spiral up to at least currentAge + 14, or 98, whichever is larger
+  const maxAge = Math.max(98, currentAge + 14);
+  // How many times through the chakra cycle
+  const passNumber = spiral > 1
+    ? `${spiral === 2 ? 'Second' : 'Third'} time through ${primary.name.toLowerCase()}`
+    : null;
 
   return (
     <div className={styles.page}>
@@ -37,15 +42,15 @@ export default function JourneyPage() {
         </p>
       </header>
 
-      <JourneyTimeline
-        spiral={activeSpiral}
+      <LifeSpiral
         currentAge={currentAge}
         selectedAge={selectedAge}
         onSelectAge={setSelectedAge}
+        maxAge={maxAge}
         size={340}
       />
 
-      {/* Age scrubber with quick jump buttons */}
+      {/* Age scrubber */}
       <div className={styles.scrubber}>
         <button
           className={styles.scrubBtn}
@@ -64,7 +69,7 @@ export default function JourneyPage() {
         </div>
         <button
           className={styles.scrubBtn}
-          onClick={() => setSelectedAge(Math.min(98, selectedAge + 1))}
+          onClick={() => setSelectedAge(Math.min(146, selectedAge + 1))}
           aria-label="Next year"
         >
           ›
@@ -85,6 +90,9 @@ export default function JourneyPage() {
             <p className={styles.posMeta}>
               Ages {ageRange.start}–{ageRange.end} · {primary.theme}
             </p>
+            {passNumber && (
+              <p className={styles.posPass}>{passNumber}</p>
+            )}
           </div>
         </div>
       </GlassCard>

@@ -147,6 +147,14 @@
   margin-top: 4px;
 }
 
+.posPass {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
 .posBody {
   font-family: var(--font-display);
   font-style: italic;
