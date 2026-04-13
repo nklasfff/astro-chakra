@@ -25,9 +25,7 @@ export default function JourneyPage() {
   const subStates = hasChakraStates(sub.id) ? getChakraStates(sub.id) : null;
 
   const isViewingCurrent = selectedAge === currentAge;
-  // Show spiral up to at least currentAge + 14, or 98, whichever is larger
   const maxAge = Math.max(98, currentAge + 14);
-  // How many times through the chakra cycle
   const passNumber = spiral > 1
     ? `${spiral === 2 ? 'Second' : 'Third'} time through ${primary.name.toLowerCase()}`
     : null;
