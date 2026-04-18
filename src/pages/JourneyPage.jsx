@@ -1,6 +1,11 @@
 import { useState, useMemo } from 'react';
 import { useUser } from '../context/UserContext';
-import { getJourneyPosition, getSpiralLabel, getSpiralMeaning } from '../engine/chakraJourney';
+import {
+  getJourneyPosition,
+  getSpiralLabel,
+  getSpiralMeaning,
+  getQuietCalling,
+} from '../engine/chakraJourney';
 import { getChakraStates, hasChakraStates } from '../engine/chakraStates';
 import LifeSpiral from '../components/hero/LifeSpiral';
 import GlassCard from '../components/common/GlassCard';
@@ -47,6 +52,10 @@ export default function JourneyPage() {
         maxAge={maxAge}
         size={340}
       />
+
+      {getQuietCalling(primary.id) && (
+        <p className={styles.calling}>{getQuietCalling(primary.id)}</p>
+      )}
 
       {/* Age scrubber */}
       <div className={styles.scrubber}>

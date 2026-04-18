@@ -110,3 +110,23 @@ export function getSpiralMeaning(spiralNumber) {
     }[spiralNumber] || ''
   );
 }
+
+/**
+ * The quiet calling: a whispered line pointing to what the complement
+ * chakra is holding while the primary chakra does its work. One line per
+ * decade-chakra. The axes pair root↔crown, sacral↔thirdeye, solar↔throat;
+ * the heart is its own meeting place.
+ */
+const QUIET_CALLING = {
+  root: 'While the root finds the ground, the crown remembers you belonged before you earned it.',
+  sacral: 'While the sacral feels its tides, the third eye watches from a stiller shore.',
+  solar: 'While the solar gathers its will, the throat waits for the word it serves.',
+  heart: 'Here the shores meet — the heart holds its own weight.',
+  throat: 'While the throat shapes its truth, the solar asks whether you mean it.',
+  thirdeye: 'While the third eye clears, the sacral asks if anything in you still wants.',
+  crown: 'While meaning opens upward, the root asks if your weight is still on the chair.',
+};
+
+export function getQuietCalling(chakraId) {
+  return QUIET_CALLING[chakraId] || null;
+}
