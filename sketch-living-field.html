@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="da">
+  <head>
+    <meta charset="UTF-8" />
+    <title>The Living Field — skitse (alder 62)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #fdfbf6;
+        --text-bright: #2a2118;
+        --text-primary: #453629;
+        --text-secondary: #7a5a3e;
+        --text-muted: #a58c68;
+
+        --sacral: #dd7c5c; /* primary — the decade */
+        --thirdeye: #6e6aa8; /* calling — the complement */
+        --crown: #9f7bc0; /* year sub-chakra */
+      }
+      [data-theme='dark'] {
+        --bg: #0b0a09;
+        --text-bright: #f5ecdc;
+        --text-primary: #dccdb2;
+        --text-secondary: #a8957a;
+        --text-muted: #76675a;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text-primary);
+        font-family: 'Inter', sans-serif;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 60px 20px 120px;
+        transition: background 0.4s ease, color 0.4s ease;
+      }
+
+      .toggle {
+        position: fixed;
+        top: 16px;
+        right: 20px;
+        background: transparent;
+        border: 1px solid rgba(122, 90, 62, 0.35);
+        color: var(--text-secondary);
+        font-family: 'Cormorant Garamond', serif;
+        font-style: italic;
+        font-size: 0.85rem;
+        letter-spacing: 0.08em;
+        padding: 6px 14px;
+        border-radius: 100px;
+        cursor: pointer;
+      }
+      [data-theme='dark'] .toggle {
+        border-color: rgba(245, 236, 220, 0.28);
+      }
+
+      header {
+        text-align: center;
+        max-width: 420px;
+        margin-bottom: 32px;
+      }
+      header .label {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        color: var(--text-muted);
+      }
+      header h1 {
+        font-family: 'Cormorant Garamond', serif;
+        font-weight: 300;
+        font-size: 2rem;
+        line-height: 1.2;
+        color: var(--text-bright);
+        margin: 6px 0 4px;
+      }
+      header p {
+        font-family: 'Cormorant Garamond', serif;
+        font-style: italic;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: var(--text-secondary);
+      }
+
+      .figure {
+        width: 360px;
+        height: 360px;
+        position: relative;
+      }
+
+      .figure svg {
+        width: 100%;
+        height: 100%;
+      }
+
+      /* Soft, slow watercolor breathing */
+      @keyframes breathe-primary {
+        0%,
+        100% {
+          opacity: 0.92;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1.018);
+        }
+      }
+      @keyframes breathe-calling {
+        0%,
+        100% {
+          opacity: 0.72;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.88;
+          transform: scale(1.012);
+        }
+      }
+      @keyframes breathe-echo {
+        0%,
+        100% {
+          opacity: 0.28;
+        }
+        50% {
+          opacity: 0.42;
+        }
+      }
+      @keyframes breathe-year {
+        0%,
+        100% {
+          opacity: 0.88;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+      @keyframes pulse-heart {
+        0%,
+        100% {
+          opacity: 0.7;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+
+      .primary-field {
+        animation: breathe-primary 6s ease-in-out infinite;
+        transform-origin: 215px 168px;
+      }
+      .calling-field {
+        animation: breathe-calling 8.5s ease-in-out infinite;
+        transform-origin: 148px 212px;
+      }
+      .echo-ring {
+        animation: breathe-echo 7.5s ease-in-out infinite;
+        transform-origin: 215px 168px;
+      }
+      .year-mark {
+        animation: breathe-year 5s ease-in-out infinite;
+        transform-origin: 282px 132px;
+      }
+      .heart-point {
+        animation: pulse-heart 4.2s ease-in-out infinite;
+        transform-origin: 180px 180px;
+      }
+
+      .caption {
+        margin-top: 28px;
+        text-align: center;
+        max-width: 480px;
+      }
+      .caption .age {
+        font-family: 'Cormorant Garamond', serif;
+        font-style: italic;
+        font-size: 1.15rem;
+        color: var(--text-bright);
+        letter-spacing: 0.02em;
+      }
+      .caption .where {
+        display: block;
+        margin-top: 6px;
+        font-family: 'Cormorant Garamond', serif;
+        font-style: italic;
+        font-size: 0.95rem;
+        color: var(--text-secondary);
+        letter-spacing: 0.02em;
+      }
+      .caption .calling {
+        display: block;
+        margin-top: 2px;
+        font-family: 'Cormorant Garamond', serif;
+        font-style: italic;
+        font-size: 0.88rem;
+        color: var(--text-muted);
+      }
+
+      .notes {
+        margin-top: 56px;
+        max-width: 520px;
+        font-family: 'Inter', sans-serif;
+        font-size: 0.82rem;
+        line-height: 1.7;
+        color: var(--text-secondary);
+      }
+      .notes h2 {
+        font-family: 'Cormorant Garamond', serif;
+        font-weight: 400;
+        font-size: 1.05rem;
+        color: var(--text-bright);
+        margin: 28px 0 10px;
+        letter-spacing: 0.04em;
+      }
+      .notes h2:first-child {
+        margin-top: 0;
+      }
+      .notes p {
+        margin: 0 0 10px;
+      }
+      .notes ul {
+        padding-left: 18px;
+        margin: 0 0 12px;
+      }
+      .notes li {
+        margin-bottom: 4px;
+      }
+      .notes .tag {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        vertical-align: -1px;
+        margin-right: 6px;
+      }
+    </style>
+  </head>
+  <body>
+    <button class="toggle" onclick="document.documentElement.toggleAttribute('data-theme-dark'); document.documentElement.setAttribute('data-theme', document.documentElement.hasAttribute('data-theme-dark') ? 'dark' : 'light')">
+      skift tema
+    </button>
+
+    <header>
+      <p class="label">Journey</p>
+      <h1>Seven centres, moving</h1>
+      <p>The chakras are not static. Each one forms, modulates, and returns.</p>
+    </header>
+
+    <div class="figure">
+      <svg viewBox="0 0 360 360" aria-hidden="true">
+        <defs>
+          <!-- Primary (Sacral) — warm coral, dense in the centre, soft at the edge -->
+          <radialGradient id="primary" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#dd7c5c" stop-opacity="0.72" />
+            <stop offset="32%" stop-color="#dd7c5c" stop-opacity="0.48" />
+            <stop offset="65%" stop-color="#dd7c5c" stop-opacity="0.18" />
+            <stop offset="100%" stop-color="#dd7c5c" stop-opacity="0" />
+          </radialGradient>
+
+          <!-- Calling (Third Eye) — cooler, quieter, further out -->
+          <radialGradient id="calling" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#6e6aa8" stop-opacity="0.4" />
+            <stop offset="40%" stop-color="#6e6aa8" stop-opacity="0.22" />
+            <stop offset="100%" stop-color="#6e6aa8" stop-opacity="0" />
+          </radialGradient>
+
+          <!-- Year marker (Crown, the sub-chakra of year 6) -->
+          <radialGradient id="yearmark" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#9f7bc0" stop-opacity="0.85" />
+            <stop offset="55%" stop-color="#9f7bc0" stop-opacity="0.35" />
+            <stop offset="100%" stop-color="#9f7bc0" stop-opacity="0" />
+          </radialGradient>
+
+          <!-- Heart-point (centre where the fields meet) -->
+          <radialGradient id="heart" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#f5ecdc" stop-opacity="0.9" />
+            <stop offset="60%" stop-color="#f5ecdc" stop-opacity="0.25" />
+            <stop offset="100%" stop-color="#f5ecdc" stop-opacity="0" />
+          </radialGradient>
+
+          <!-- Subtle paper texture (barely visible) -->
+          <filter id="grain">
+            <feTurbulence type="fractalNoise" baseFrequency="1.3" numOctaves="2" seed="4" />
+            <feColorMatrix values="0 0 0 0 0.2   0 0 0 0 0.15   0 0 0 0 0.08   0 0 0 0.04 0" />
+            <feComposite in2="SourceGraphic" operator="in" />
+          </filter>
+        </defs>
+
+        <!-- Echo ring — ONE faint ring (we are in spiral 2; one prior passage
+             through Sacral as a teen lives as a ghost behind today's field) -->
+        <g class="echo-ring">
+          <circle
+            cx="215"
+            cy="168"
+            r="148"
+            fill="none"
+            stroke="#dd7c5c"
+            stroke-opacity="0.38"
+            stroke-width="0.5"
+            stroke-dasharray="1.5 5"
+          />
+        </g>
+
+        <!-- Calling field (Third Eye — Sacral's axis complement) -->
+        <g class="calling-field">
+          <circle cx="148" cy="212" r="100" fill="url(#calling)" />
+        </g>
+
+        <!-- Primary field (Sacral — where you are now) -->
+        <g class="primary-field">
+          <circle cx="215" cy="168" r="132" fill="url(#primary)" />
+        </g>
+
+        <!-- Paper grain wash over the primary area -->
+        <circle
+          cx="215"
+          cy="168"
+          r="132"
+          fill="#000"
+          opacity="0.05"
+          filter="url(#grain)"
+        />
+
+        <!-- Heart-point — the meeting. A still glow at the true centre. -->
+        <g class="heart-point">
+          <circle cx="180" cy="180" r="18" fill="url(#heart)" />
+          <circle cx="180" cy="180" r="2" fill="#7a5a3e" opacity="0.65" />
+        </g>
+
+        <!-- Year marker — Crown-colored. Year 6 of 7, near the outer edge
+             of the primary field. A small breathing glow. -->
+        <g class="year-mark">
+          <circle cx="282" cy="132" r="16" fill="url(#yearmark)" />
+          <circle cx="282" cy="132" r="3" fill="#9f7bc0" opacity="0.85" />
+        </g>
+
+        <!-- Quiet devanagari syllable of primary chakra — barely there,
+             like a watermark in the field -->
+        <text
+          x="215"
+          y="180"
+          text-anchor="middle"
+          font-family="Cormorant Garamond, Georgia, serif"
+          font-size="60"
+          font-weight="300"
+          fill="#dd7c5c"
+          opacity="0.10"
+          style="pointer-events: none"
+        >
+          स्व
+        </text>
+      </svg>
+    </div>
+
+    <div class="caption">
+      <div class="age">age 62</div>
+      <span class="where">Sakral · anden gennemgang · år 6 af 7</span>
+      <span class="calling">Kronen blomstrer i Sakral · 3. øje kalder</span>
+    </div>
+
+    <div class="notes">
+      <h2>Læsenøgle til denne skitse</h2>
+      <p>
+        <span class="tag" style="background: #dd7c5c"></span>
+        <strong>Det primære felt</strong> (koral) — dekadens chakra. Hvor du er
+        lige nu. Ånder langsomt, tættest i midten, bløder ud i kanten.
+      </p>
+      <p>
+        <span class="tag" style="background: #9f7bc0"></span>
+        <strong>Års-markøren</strong> (violet) — årets sub-chakra, placeret inde
+        i feltet ud fra hvor i dekaden du er. Her år 6 af 7: tæt på kanten.
+      </p>
+      <p>
+        <span class="tag" style="background: #6e6aa8"></span>
+        <strong>Kaldet</strong> (indigo) — aksens komplement. Altid til stede,
+        aldrig dominerende. Sakral ↔ 3. øje, Rod ↔ Krone, Solar ↔ Hals, Hjerte er
+        midten.
+      </p>
+      <p>
+        <span class="tag" style="background: #7a5a3e"></span>
+        <strong>Hjerte-punktet</strong> — der hvor felterne mødes. Det
+        emergerende. Et stille glimt, ikke en etiket.
+      </p>
+      <p>
+        <span class="tag" style="background: transparent; border: 1px dashed #dd7c5c"></span>
+        <strong>Ekko-ringen</strong> — én tynd prikket ring for hver spiral du
+        allerede er gået igennem i dette chakra. Her én, fordi en 62-årig har
+        besøgt Sakral før (som 7–13-årig). En 25-årig har ingen. En 110-årig
+        har to.
+      </p>
+
+      <h2>Hvad du ikke ser — og det er pointen</h2>
+      <ul>
+        <li>Intet gitter. Ingen celler.</li>
+        <li>Ingen spiral-switcher. Ekko-ringene fortæller det.</li>
+        <li>Ingen række-/kolonnelabels.</li>
+        <li>Ingen matrix at afkode.</li>
+      </ul>
+
+      <h2>Hvad en 25-årig ville se på samme skærm</h2>
+      <p>
+        Samme komposition. Solar-felt (guld) i stedet for Sakral. Hals (blå)
+        som kaldet. Ingen ekko-ring. Års-markøren længere inde mod midten.
+      </p>
+
+      <h2>Hvad en 88-årig ville se</h2>
+      <p>
+        Hjerte-felt (salvie-grøn) — men her sker noget smukt: hjertet
+        <em>er</em> mødet mellem akserne, så der er intet separat kald.
+        Feltet intensiveres bare i centrum. Én ekko-ring bag sig. Rolig, samlet.
+      </p>
+    </div>
+  </body>
+</html>
